@@ -690,6 +690,227 @@ export function ProductManagement() {
           </Card>
         </div>
       )}
+
+      {/* Add Product Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <Card className="max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Add New Product</CardTitle>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              <CardDescription>
+                Add a new medicine, supplement, equipment, or supply to your inventory.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Basic Product Information */}
+              <div>
+                <h4 className="font-medium mb-3">Basic Information</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Product Name</label>
+                    <Input placeholder="e.g., Paracetamol 500mg" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">SKU</label>
+                    <Input placeholder="e.g., MED-PAR-500" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Category</label>
+                    <Select defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="medicine">Medicine</SelectItem>
+                        <SelectItem value="supplements">Supplements</SelectItem>
+                        <SelectItem value="equipment">Equipment</SelectItem>
+                        <SelectItem value="supplies">Supplies</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Brand</label>
+                    <Input placeholder="e.g., MediCare" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Manufacturer</label>
+                    <Input placeholder="e.g., MediCare Pharmaceuticals" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Supplier</label>
+                    <Input placeholder="e.g., PharmaCorp Inc." />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <label className="text-sm font-medium mb-2 block">Description</label>
+                  <textarea
+                    className="w-full p-2 border rounded-lg text-sm"
+                    rows={3}
+                    placeholder="Enter detailed product description..."
+                  />
+                </div>
+              </div>
+
+              {/* Pricing & Inventory */}
+              <div>
+                <h4 className="font-medium mb-3">Pricing & Inventory</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Selling Price ($)</label>
+                    <Input type="number" placeholder="0.00" step="0.01" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Cost Price ($)</label>
+                    <Input type="number" placeholder="0.00" step="0.01" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Initial Stock</label>
+                    <Input type="number" placeholder="0" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Low Stock Alert</label>
+                    <Input type="number" placeholder="10" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Batch Number</label>
+                    <Input placeholder="e.g., PAR2024001" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Expiry Date</label>
+                    <Input type="date" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Medical Information (for medicines) */}
+              <div>
+                <h4 className="font-medium mb-3">Medical Information</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Dosage/Strength</label>
+                    <Input placeholder="e.g., 500mg" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Storage Conditions</label>
+                    <Input placeholder="e.g., Store in cool, dry place" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Side Effects</label>
+                    <textarea
+                      className="w-full p-2 border rounded-lg text-sm"
+                      rows={3}
+                      placeholder="Enter side effects, separated by commas"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Contraindications</label>
+                    <textarea
+                      className="w-full p-2 border rounded-lg text-sm"
+                      rows={3}
+                      placeholder="Enter contraindications, separated by commas"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Product Settings */}
+              <div>
+                <h4 className="font-medium mb-3">Product Settings</h4>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Prescription Required</label>
+                      <p className="text-xs text-muted-foreground">Require valid prescription for purchase</p>
+                    </div>
+                    <Switch />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Featured Product</label>
+                      <p className="text-xs text-muted-foreground">Display prominently on homepage</p>
+                    </div>
+                    <Switch />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Track Inventory</label>
+                      <p className="text-xs text-muted-foreground">Enable stock tracking and alerts</p>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Product Status</label>
+                    <Select defaultValue="active">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="active">Active</SelectItem>
+                        <SelectItem value="inactive">Inactive</SelectItem>
+                        <SelectItem value="discontinued">Discontinued</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product Images */}
+              <div>
+                <h4 className="font-medium mb-3">Product Images</h4>
+                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
+                  <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Click to upload product images or drag and drop
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    PNG, JPG, GIF up to 10MB
+                  </p>
+                  <Button variant="outline" className="mt-3">
+                    Choose Files
+                  </Button>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4">
+                <Button
+                  className="flex-1"
+                  onClick={() => {
+                    // Here you would handle the form submission
+                    alert("Product added successfully!");
+                    setShowAddModal(false);
+                  }}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Product
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

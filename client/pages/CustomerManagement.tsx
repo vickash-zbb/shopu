@@ -576,6 +576,221 @@ export function CustomerManagement() {
           </Card>
         </div>
       )}
+
+      {/* Add Customer Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <Card className="max-w-3xl w-full max-h-[80vh] overflow-y-auto">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Add New Customer</CardTitle>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              <CardDescription>
+                Create a new customer account for the e-pharmacy platform.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Personal Information */}
+              <div>
+                <h4 className="font-medium mb-3">Personal Information</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Full Name</label>
+                    <Input placeholder="Enter full name" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Email Address</label>
+                    <Input type="email" placeholder="customer@email.com" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Phone Number</label>
+                    <Input placeholder="+1 (555) 123-4567" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Date of Birth</label>
+                    <Input type="date" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Address Information */}
+              <div>
+                <h4 className="font-medium mb-3">Address Information</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Street Address</label>
+                    <Input placeholder="123 Main Street" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">City</label>
+                      <Input placeholder="City" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">State</label>
+                      <Input placeholder="State" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">ZIP Code</label>
+                      <Input placeholder="12345" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Medical Information */}
+              <div>
+                <h4 className="font-medium mb-3">Medical Information</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Insurance Provider</label>
+                    <Select defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select insurance provider" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="blue_cross">Blue Cross</SelectItem>
+                        <SelectItem value="aetna">Aetna</SelectItem>
+                        <SelectItem value="medicare">Medicare</SelectItem>
+                        <SelectItem value="united_healthcare">United Healthcare</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Insurance ID</label>
+                    <Input placeholder="Insurance ID number" />
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label className="text-sm font-medium mb-2 block">Medical Conditions</label>
+                  <textarea
+                    className="w-full p-2 border rounded-lg text-sm"
+                    rows={3}
+                    placeholder="Enter any known medical conditions (optional)"
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <label className="text-sm font-medium mb-2 block">Allergies</label>
+                  <textarea
+                    className="w-full p-2 border rounded-lg text-sm"
+                    rows={2}
+                    placeholder="Enter any known allergies (optional)"
+                  />
+                </div>
+              </div>
+
+              {/* Emergency Contact */}
+              <div>
+                <h4 className="font-medium mb-3">Emergency Contact</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Contact Name</label>
+                    <Input placeholder="Emergency contact name" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Contact Phone</label>
+                    <Input placeholder="+1 (555) 987-6543" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Relationship</label>
+                    <Select defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select relationship" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="spouse">Spouse</SelectItem>
+                        <SelectItem value="parent">Parent</SelectItem>
+                        <SelectItem value="child">Child</SelectItem>
+                        <SelectItem value="sibling">Sibling</SelectItem>
+                        <SelectItem value="friend">Friend</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Account Settings */}
+              <div>
+                <h4 className="font-medium mb-3">Account Settings</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Temporary Password</label>
+                    <Input type="password" placeholder="Enter temporary password" />
+                    <p className="text-xs text-muted-foreground mt-1">Customer will be required to change password on first login</p>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Send Welcome Email</label>
+                      <p className="text-xs text-muted-foreground">Email login credentials to the customer</p>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Marketing Emails</label>
+                      <p className="text-xs text-muted-foreground">Send promotional emails and newsletters</p>
+                    </div>
+                    <Switch />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">SMS Notifications</label>
+                      <p className="text-xs text-muted-foreground">Send order updates via SMS</p>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                </div>
+              </div>
+
+              {/* Notes */}
+              <div>
+                <h4 className="font-medium mb-3">Additional Notes</h4>
+                <textarea
+                  className="w-full p-2 border rounded-lg text-sm"
+                  rows={3}
+                  placeholder="Enter any additional notes about this customer (optional)"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4">
+                <Button
+                  className="flex-1"
+                  onClick={() => {
+                    // Here you would handle the form submission
+                    alert("Customer created successfully!");
+                    setShowAddModal(false);
+                  }}
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Create Customer
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

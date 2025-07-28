@@ -15,33 +15,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/orders" element={<Orders />} />
-          <Route 
-            path="/users/customers" 
-            element={
-              <PlaceholderPage 
-                title="Customer Management" 
-                description="Manage customer profiles, view order history, and handle account management."
-              />
-            } 
-          />
-          <Route 
-            path="/users/delivery" 
-            element={
-              <PlaceholderPage 
-                title="Delivery Staff Management" 
-                description="Manage delivery personnel profiles, assignments, and performance metrics."
-              />
-            } 
-          />
-          <Route 
-            path="/users/admin" 
-            element={
-              <PlaceholderPage 
-                title="Admin User Management" 
-                description="Manage admin roles, permissions, and system access controls."
-              />
-            } 
-          />
+          <Route path="/users/customers" element={<CustomerManagement />} />
+          <Route path="/users/delivery" element={<DeliveryStaffManagement />} />
+          <Route path="/users/admin" element={<AdminUserManagement />} />
           <Route 
             path="/logistics" 
             element={

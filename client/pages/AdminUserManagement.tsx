@@ -645,6 +645,169 @@ export function AdminUserManagement() {
           </Card>
         </div>
       )}
+
+      {/* Add Admin Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <Card className="max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Add New Admin User</CardTitle>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              <CardDescription>
+                Create a new administrator account with specific roles and permissions.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Basic Information */}
+              <div>
+                <h4 className="font-medium mb-3">Basic Information</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Full Name</label>
+                    <Input placeholder="Enter full name" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Email Address</label>
+                    <Input type="email" placeholder="user@medicare.com" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Phone Number</label>
+                    <Input placeholder="+1 (555) 123-4567" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Department</label>
+                    <Select defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select department" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="management">Management</SelectItem>
+                        <SelectItem value="operations">Operations</SelectItem>
+                        <SelectItem value="customer_service">Customer Service</SelectItem>
+                        <SelectItem value="it">IT</SelectItem>
+                        <SelectItem value="pharmacy">Pharmacy</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Role & Permissions */}
+              <div>
+                <h4 className="font-medium mb-3">Role & Permissions</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Admin Role</label>
+                    <Select defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="super_admin">Super Admin</SelectItem>
+                        <SelectItem value="admin">Admin</SelectItem>
+                        <SelectItem value="moderator">Moderator</SelectItem>
+                        <SelectItem value="viewer">Viewer</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">Permissions</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        "Dashboard Access",
+                        "Order Management",
+                        "User Management",
+                        "Staff Management",
+                        "Product Management",
+                        "Reports & Analytics",
+                        "Settings Management",
+                        "System Administration"
+                      ].map((permission) => (
+                        <div key={permission} className="flex items-center space-x-2">
+                          <input type="checkbox" id={permission} className="rounded" />
+                          <label htmlFor={permission} className="text-sm">{permission}</label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Security Settings */}
+              <div>
+                <h4 className="font-medium mb-3">Security Settings</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Temporary Password</label>
+                    <Input type="password" placeholder="Enter temporary password" />
+                    <p className="text-xs text-muted-foreground mt-1">User will be required to change password on first login</p>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Require Two-Factor Authentication</label>
+                      <p className="text-xs text-muted-foreground">Force 2FA setup on first login</p>
+                    </div>
+                    <Switch />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Send Welcome Email</label>
+                      <p className="text-xs text-muted-foreground">Email login credentials to the user</p>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                </div>
+              </div>
+
+              {/* IP Restrictions (Optional) */}
+              <div>
+                <h4 className="font-medium mb-3">IP Restrictions (Optional)</h4>
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Allowed IP Addresses</label>
+                  <textarea
+                    className="w-full p-2 border rounded-lg text-sm"
+                    rows={3}
+                    placeholder="Enter IP addresses or ranges, one per line (leave empty for no restrictions)"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4">
+                <Button
+                  className="flex-1"
+                  onClick={() => {
+                    // Here you would handle the form submission
+                    alert("Admin user created successfully!");
+                    setShowAddModal(false);
+                  }}
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Create Admin User
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

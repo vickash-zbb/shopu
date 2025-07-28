@@ -182,6 +182,7 @@ export function CustomerManagement() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const filteredCustomers = mockCustomers.filter((customer) => {
     const matchesSearch = customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   Download,
   Eye,
   Edit,
@@ -20,14 +20,31 @@ import {
   Plus,
   Target,
   Settings,
-  Copy
+  Copy,
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -37,7 +54,8 @@ const mockNotifications = [
   {
     id: "NOT-001",
     title: "Order Delivery Update",
-    message: "Your order #ORD-001 is out for delivery and will arrive within 30 minutes.",
+    message:
+      "Your order #ORD-001 is out for delivery and will arrive within 30 minutes.",
     type: "sms",
     status: "sent",
     recipients: 1,
@@ -49,14 +67,15 @@ const mockNotifications = [
     openRate: 85,
     clickRate: 12,
     createdBy: "Sarah Johnson",
-    campaign: "Delivery Updates"
+    campaign: "Delivery Updates",
   },
   {
     id: "NOT-002",
     title: "Weekly Promotions",
-    message: "Don't miss our weekly sale! Get 20% off on all vitamins and supplements. Use code HEALTH20.",
+    message:
+      "Don't miss our weekly sale! Get 20% off on all vitamins and supplements. Use code HEALTH20.",
     type: "email",
-    status: "sent", 
+    status: "sent",
     recipients: 1247,
     audience: "customers",
     targetGroup: "All Active Customers",
@@ -66,12 +85,13 @@ const mockNotifications = [
     openRate: 24.3,
     clickRate: 8.7,
     createdBy: "Mike Davis",
-    campaign: "Weekly Promotions"
+    campaign: "Weekly Promotions",
   },
   {
     id: "NOT-003",
     title: "New Order Assignment",
-    message: "You have been assigned a new delivery order #ORD-003. Please check the app for details.",
+    message:
+      "You have been assigned a new delivery order #ORD-003. Please check the app for details.",
     type: "push",
     status: "delivered",
     recipients: 1,
@@ -83,12 +103,13 @@ const mockNotifications = [
     openRate: 100,
     clickRate: 95,
     createdBy: "System",
-    campaign: "Order Assignments"
+    campaign: "Order Assignments",
   },
   {
     id: "NOT-004",
     title: "Prescription Refill Reminder",
-    message: "Your prescription for Insulin Pen is due for refill in 3 days. Order now to avoid running out.",
+    message:
+      "Your prescription for Insulin Pen is due for refill in 3 days. Order now to avoid running out.",
     type: "sms",
     status: "scheduled",
     recipients: 23,
@@ -100,12 +121,13 @@ const mockNotifications = [
     openRate: null,
     clickRate: null,
     createdBy: "Emily Wilson",
-    campaign: "Prescription Reminders"
+    campaign: "Prescription Reminders",
   },
   {
     id: "NOT-005",
     title: "System Maintenance Notice",
-    message: "Scheduled maintenance will occur tonight from 11 PM to 2 AM. The system will be temporarily unavailable.",
+    message:
+      "Scheduled maintenance will occur tonight from 11 PM to 2 AM. The system will be temporarily unavailable.",
     type: "email",
     status: "failed",
     recipients: 45,
@@ -117,8 +139,8 @@ const mockNotifications = [
     openRate: 45,
     clickRate: 5,
     createdBy: "Admin User",
-    campaign: "System Notices"
-  }
+    campaign: "System Notices",
+  },
 ];
 
 const getTypeIcon = (type: string) => {
@@ -148,10 +170,10 @@ const getStatusBadge = (status: string) => {
   };
 
   const Icon = icons[status as keyof typeof icons];
-  
+
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("font-medium", styles[status as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
@@ -170,8 +192,8 @@ const getAudienceBadge = (audience: string) => {
   };
 
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("text-xs", styles[audience as keyof typeof styles])}
     >
       {audience.toUpperCase()}
@@ -187,12 +209,15 @@ export function NotificationsManagement() {
   const [showComposer, setShowComposer] = useState(false);
 
   const filteredNotifications = mockNotifications.filter((notification) => {
-    const matchesSearch = notification.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         notification.message.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         notification.id.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesType = typeFilter === "all" || notification.type === typeFilter;
-    const matchesTab = selectedTab === "all" || notification.status === selectedTab;
+    const matchesSearch =
+      notification.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      notification.message.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      notification.id.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesType =
+      typeFilter === "all" || notification.type === typeFilter;
+    const matchesTab =
+      selectedTab === "all" || notification.status === selectedTab;
 
     return matchesSearch && matchesType && matchesTab;
   });
@@ -200,9 +225,10 @@ export function NotificationsManagement() {
   const getStatusCounts = () => {
     return {
       all: mockNotifications.length,
-      sent: mockNotifications.filter(n => n.status === 'sent').length,
-      scheduled: mockNotifications.filter(n => n.status === 'scheduled').length,
-      failed: mockNotifications.filter(n => n.status === 'failed').length,
+      sent: mockNotifications.filter((n) => n.status === "sent").length,
+      scheduled: mockNotifications.filter((n) => n.status === "scheduled")
+        .length,
+      failed: mockNotifications.filter((n) => n.status === "failed").length,
     };
   };
 
@@ -213,9 +239,12 @@ export function NotificationsManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Notifications Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Notifications Management
+          </h1>
           <p className="text-muted-foreground">
-            Configure and send SMS, email, and push notifications to users and staff.
+            Configure and send SMS, email, and push notifications to users and
+            staff.
           </p>
         </div>
         <div className="flex items-center space-x-2">
@@ -239,7 +268,9 @@ export function NotificationsManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {mockNotifications.reduce((sum, n) => sum + (n.recipients || 0), 0).toLocaleString()}
+              {mockNotifications
+                .reduce((sum, n) => sum + (n.recipients || 0), 0)
+                .toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground">
               Notifications this month
@@ -253,8 +284,13 @@ export function NotificationsManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {(mockNotifications.filter(n => n.deliveryRate).reduce((sum, n) => sum + (n.deliveryRate || 0), 0) / 
-                mockNotifications.filter(n => n.deliveryRate).length).toFixed(1)}%
+              {(
+                mockNotifications
+                  .filter((n) => n.deliveryRate)
+                  .reduce((sum, n) => sum + (n.deliveryRate || 0), 0) /
+                mockNotifications.filter((n) => n.deliveryRate).length
+              ).toFixed(1)}
+              %
             </div>
             <p className="text-xs text-muted-foreground">
               Successfully delivered
@@ -268,8 +304,13 @@ export function NotificationsManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {(mockNotifications.filter(n => n.openRate).reduce((sum, n) => sum + (n.openRate || 0), 0) / 
-                mockNotifications.filter(n => n.openRate).length).toFixed(1)}%
+              {(
+                mockNotifications
+                  .filter((n) => n.openRate)
+                  .reduce((sum, n) => sum + (n.openRate || 0), 0) /
+                mockNotifications.filter((n) => n.openRate).length
+              ).toFixed(1)}
+              %
             </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-success">+3%</span> from last month
@@ -351,9 +392,14 @@ export function NotificationsManagement() {
           {/* Notifications List */}
           <Card>
             <CardHeader>
-              <CardTitle>Notifications ({filteredNotifications.length})</CardTitle>
+              <CardTitle>
+                Notifications ({filteredNotifications.length})
+              </CardTitle>
               <CardDescription>
-                {selectedTab === "all" ? "All notifications" : `${selectedTab} notifications`} in the system
+                {selectedTab === "all"
+                  ? "All notifications"
+                  : `${selectedTab} notifications`}{" "}
+                in the system
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -361,8 +407,8 @@ export function NotificationsManagement() {
                 {filteredNotifications.map((notification) => {
                   const TypeIcon = getTypeIcon(notification.type);
                   return (
-                    <div 
-                      key={notification.id} 
+                    <div
+                      key={notification.id}
                       className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
                       onClick={() => setSelectedNotification(notification)}
                     >
@@ -372,7 +418,9 @@ export function NotificationsManagement() {
                         </div>
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium">{notification.title}</span>
+                            <span className="font-medium">
+                              {notification.title}
+                            </span>
                             {getStatusBadge(notification.status)}
                             {getAudienceBadge(notification.audience)}
                           </div>
@@ -384,7 +432,12 @@ export function NotificationsManagement() {
                             <span>Campaign: {notification.campaign}</span>
                             <span>By: {notification.createdBy}</span>
                             {notification.sentTime && (
-                              <span>Sent: {new Date(notification.sentTime).toLocaleDateString()}</span>
+                              <span>
+                                Sent:{" "}
+                                {new Date(
+                                  notification.sentTime,
+                                ).toLocaleDateString()}
+                              </span>
                             )}
                           </div>
                         </div>
@@ -393,14 +446,18 @@ export function NotificationsManagement() {
                         <div className="text-right">
                           {notification.openRate !== null ? (
                             <>
-                              <p className="font-medium">{notification.openRate}% opened</p>
+                              <p className="font-medium">
+                                {notification.openRate}% opened
+                              </p>
                               <p className="text-xs text-muted-foreground">
                                 {notification.clickRate}% clicked
                               </p>
                             </>
                           ) : (
                             <p className="text-sm text-muted-foreground">
-                              {notification.status === 'scheduled' ? 'Pending' : 'No data'}
+                              {notification.status === "scheduled"
+                                ? "Pending"
+                                : "No data"}
                             </p>
                           )}
                         </div>
@@ -429,11 +486,13 @@ export function NotificationsManagement() {
                     </div>
                   );
                 })}
-                
+
                 {filteredNotifications.length === 0 && (
                   <div className="text-center py-8">
                     <Bell className="mx-auto h-12 w-12 text-muted-foreground" />
-                    <h3 className="mt-2 text-sm font-medium">No notifications found</h3>
+                    <h3 className="mt-2 text-sm font-medium">
+                      No notifications found
+                    </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Try adjusting your search or filter criteria.
                     </p>
@@ -452,8 +511,8 @@ export function NotificationsManagement() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Send Notification</CardTitle>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   onClick={() => setShowComposer(false)}
                 >
@@ -467,7 +526,9 @@ export function NotificationsManagement() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Notification Type</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Notification Type
+                  </label>
                   <Select defaultValue="email">
                     <SelectTrigger>
                       <SelectValue />
@@ -480,7 +541,9 @@ export function NotificationsManagement() {
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Audience</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Audience
+                  </label>
                   <Select defaultValue="customers">
                     <SelectTrigger>
                       <SelectValue />
@@ -494,39 +557,47 @@ export function NotificationsManagement() {
                   </Select>
                 </div>
               </div>
-              
+
               <div>
                 <label className="text-sm font-medium mb-2 block">Title</label>
                 <Input placeholder="Enter notification title..." />
               </div>
-              
+
               <div>
-                <label className="text-sm font-medium mb-2 block">Message</label>
-                <Textarea 
-                  placeholder="Enter your message..." 
+                <label className="text-sm font-medium mb-2 block">
+                  Message
+                </label>
+                <Textarea
+                  placeholder="Enter your message..."
                   className="min-h-[100px]"
                 />
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Schedule</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Schedule
+                  </label>
                   <Select defaultValue="now">
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="now">Send Now</SelectItem>
-                      <SelectItem value="schedule">Schedule for Later</SelectItem>
+                      <SelectItem value="schedule">
+                        Schedule for Later
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Campaign</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Campaign
+                  </label>
                   <Input placeholder="Campaign name..." />
                 </div>
               </div>
-              
+
               <div className="flex gap-2 pt-4">
                 <Button className="flex-1">
                   <Send className="w-4 h-4 mr-2" />

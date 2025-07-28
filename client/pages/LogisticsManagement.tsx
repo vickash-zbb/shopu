@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   Download,
   Eye,
   Edit,
@@ -22,14 +22,31 @@ import {
   Phone,
   DollarSign,
   TrendingUp,
-  X
+  X,
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
@@ -45,26 +62,26 @@ const mockDispatchData = {
         name: "Mike Johnson",
         phone: "+1 (555) 456-7890",
         vehicle: "MC-001",
-        avatar: null
+        avatar: null,
       },
       customer: {
         name: "John Doe",
         address: "123 Main St, City, State 12345",
-        phone: "+1 (555) 123-4567"
+        phone: "+1 (555) 123-4567",
       },
       status: "in_transit",
       priority: "high",
       estimatedTime: 25,
       distance: "3.2 km",
       items: 3,
-      value: 156.50,
+      value: 156.5,
       startTime: "2024-01-15T14:30:00Z",
       lastUpdate: "2024-01-15T15:15:00Z",
       route: {
         pickup: "MediCare Pharmacy Central",
         dropoff: "123 Main St, City, State 12345",
-        progress: 65
-      }
+        progress: 65,
+      },
     },
     {
       id: "DEL-002",
@@ -73,12 +90,12 @@ const mockDispatchData = {
         name: "Emily Davis",
         phone: "+1 (555) 789-0123",
         vehicle: "VN-002",
-        avatar: null
+        avatar: null,
       },
       customer: {
         name: "Sarah Smith",
         address: "456 Oak Ave, City, State 12345",
-        phone: "+1 (555) 987-6543"
+        phone: "+1 (555) 987-6543",
       },
       status: "pickup",
       priority: "medium",
@@ -91,8 +108,8 @@ const mockDispatchData = {
       route: {
         pickup: "MediCare Pharmacy West",
         dropoff: "456 Oak Ave, City, State 12345",
-        progress: 15
-      }
+        progress: 15,
+      },
     },
     {
       id: "DEL-003",
@@ -101,12 +118,12 @@ const mockDispatchData = {
         name: "Alex Brown",
         phone: "+1 (555) 234-5678",
         vehicle: "BC-003",
-        avatar: null
+        avatar: null,
       },
       customer: {
         name: "Mike Johnson",
         address: "789 Pine St, City, State 12345",
-        phone: "+1 (555) 456-7890"
+        phone: "+1 (555) 456-7890",
       },
       status: "delivered",
       priority: "low",
@@ -119,9 +136,9 @@ const mockDispatchData = {
       route: {
         pickup: "MediCare Pharmacy East",
         dropoff: "789 Pine St, City, State 12345",
-        progress: 100
-      }
-    }
+        progress: 100,
+      },
+    },
   ],
   pendingAssignments: [
     {
@@ -129,7 +146,7 @@ const mockDispatchData = {
       customer: {
         name: "Emma Wilson",
         address: "321 Elm St, City, State 12345",
-        phone: "+1 (555) 321-0987"
+        phone: "+1 (555) 321-0987",
       },
       priority: "urgent",
       items: 4,
@@ -137,23 +154,23 @@ const mockDispatchData = {
       orderTime: "2024-01-15T15:30:00Z",
       deliveryWindow: "2024-01-15T16:00:00Z - 18:00:00Z",
       specialInstructions: "Prescription medication - ID verification required",
-      pharmacy: "MediCare Pharmacy Central"
+      pharmacy: "MediCare Pharmacy Central",
     },
     {
       id: "ORD-005",
       customer: {
         name: "David Brown",
         address: "654 Cedar Ave, City, State 12345",
-        phone: "+1 (555) 654-3210"
+        phone: "+1 (555) 654-3210",
       },
       priority: "medium",
       items: 1,
-      value: 45.50,
+      value: 45.5,
       orderTime: "2024-01-15T15:45:00Z",
       deliveryWindow: "2024-01-15T17:00:00Z - 19:00:00Z",
       specialInstructions: "",
-      pharmacy: "MediCare Pharmacy West"
-    }
+      pharmacy: "MediCare Pharmacy West",
+    },
   ],
   availableDrivers: [
     {
@@ -164,7 +181,7 @@ const mockDispatchData = {
       location: "Downtown District",
       status: "available",
       rating: 4.8,
-      deliveriesToday: 8
+      deliveriesToday: 8,
     },
     {
       id: "DRV-004",
@@ -174,9 +191,9 @@ const mockDispatchData = {
       location: "West District",
       status: "available",
       rating: 4.9,
-      deliveriesToday: 6
-    }
-  ]
+      deliveriesToday: 6,
+    },
+  ],
 };
 
 const getStatusBadge = (status: string) => {
@@ -197,14 +214,14 @@ const getStatusBadge = (status: string) => {
   };
 
   const Icon = icons[status as keyof typeof icons];
-  
+
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("font-medium", styles[status as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
-      {status.replace('_', ' ').toUpperCase()}
+      {status.replace("_", " ").toUpperCase()}
     </Badge>
   );
 };
@@ -218,8 +235,8 @@ const getPriorityBadge = (priority: string) => {
   };
 
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("text-xs", styles[priority as keyof typeof styles])}
     >
       {priority.toUpperCase()}
@@ -233,22 +250,38 @@ export function LogisticsManagement() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedDelivery, setSelectedDelivery] = useState<any>(null);
 
-  const filteredDeliveries = mockDispatchData.activeDeliveries.filter((delivery) => {
-    const matchesSearch = delivery.driver.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         delivery.customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         delivery.orderId.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesStatus = statusFilter === "all" || delivery.status === statusFilter;
+  const filteredDeliveries = mockDispatchData.activeDeliveries.filter(
+    (delivery) => {
+      const matchesSearch =
+        delivery.driver.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        delivery.customer.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        delivery.orderId.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesSearch && matchesStatus;
-  });
+      const matchesStatus =
+        statusFilter === "all" || delivery.status === statusFilter;
+
+      return matchesSearch && matchesStatus;
+    },
+  );
 
   const getDeliveryCounts = () => {
     return {
-      active: mockDispatchData.activeDeliveries.filter(d => d.status !== 'delivered').length,
-      pickup: mockDispatchData.activeDeliveries.filter(d => d.status === 'pickup').length,
-      in_transit: mockDispatchData.activeDeliveries.filter(d => d.status === 'in_transit').length,
-      delivered: mockDispatchData.activeDeliveries.filter(d => d.status === 'delivered').length,
+      active: mockDispatchData.activeDeliveries.filter(
+        (d) => d.status !== "delivered",
+      ).length,
+      pickup: mockDispatchData.activeDeliveries.filter(
+        (d) => d.status === "pickup",
+      ).length,
+      in_transit: mockDispatchData.activeDeliveries.filter(
+        (d) => d.status === "in_transit",
+      ).length,
+      delivered: mockDispatchData.activeDeliveries.filter(
+        (d) => d.status === "delivered",
+      ).length,
     };
   };
 
@@ -259,7 +292,9 @@ export function LogisticsManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Logistics & Dispatch</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Logistics & Dispatch
+          </h1>
           <p className="text-muted-foreground">
             Manage order assignments, delivery tracking, and route optimization.
           </p>
@@ -280,23 +315,27 @@ export function LogisticsManagement() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Deliveries</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Active Deliveries
+            </CardTitle>
             <Truck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{deliveryCounts.active}</div>
-            <p className="text-xs text-muted-foreground">
-              Currently en route
-            </p>
+            <p className="text-xs text-muted-foreground">Currently en route</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Assignments</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Pending Assignments
+            </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockDispatchData.pendingAssignments.length}</div>
+            <div className="text-2xl font-bold">
+              {mockDispatchData.pendingAssignments.length}
+            </div>
             <p className="text-xs text-muted-foreground">
               Awaiting driver assignment
             </p>
@@ -304,11 +343,15 @@ export function LogisticsManagement() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Available Drivers</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Available Drivers
+            </CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockDispatchData.availableDrivers.length}</div>
+            <div className="text-2xl font-bold">
+              {mockDispatchData.availableDrivers.length}
+            </div>
             <p className="text-xs text-muted-foreground">
               Ready for assignment
             </p>
@@ -316,7 +359,9 @@ export function LogisticsManagement() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Delivered Today</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Delivered Today
+            </CardTitle>
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -356,13 +401,15 @@ export function LogisticsManagement() {
           <Card>
             <CardHeader>
               <CardTitle>Active Deliveries ({deliveryCounts.active})</CardTitle>
-              <CardDescription>Real-time tracking of ongoing deliveries</CardDescription>
+              <CardDescription>
+                Real-time tracking of ongoing deliveries
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {filteredDeliveries.map((delivery) => (
-                  <div 
-                    key={delivery.id} 
+                  <div
+                    key={delivery.id}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
                     onClick={() => setSelectedDelivery(delivery)}
                   >
@@ -370,12 +417,17 @@ export function LogisticsManagement() {
                       <Avatar className="h-10 w-10">
                         <AvatarImage src={delivery.driver.avatar} />
                         <AvatarFallback className="bg-primary/10 text-primary font-medium text-sm">
-                          {delivery.driver.name.split(' ').map(n => n[0]).join('')}
+                          {delivery.driver.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium">{delivery.orderId}</span>
+                          <span className="font-medium">
+                            {delivery.orderId}
+                          </span>
                           {getStatusBadge(delivery.status)}
                           {getPriorityBadge(delivery.priority)}
                         </div>
@@ -385,14 +437,21 @@ export function LogisticsManagement() {
                           <span>{delivery.distance}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Progress value={delivery.route.progress} className="w-32 h-2" />
-                          <span className="text-xs text-muted-foreground">{delivery.route.progress}%</span>
+                          <Progress
+                            value={delivery.route.progress}
+                            className="w-32 h-2"
+                          />
+                          <span className="text-xs text-muted-foreground">
+                            {delivery.route.progress}%
+                          </span>
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="font-medium">${delivery.value.toFixed(2)}</p>
+                        <p className="font-medium">
+                          ${delivery.value.toFixed(2)}
+                        </p>
                         {delivery.estimatedTime > 0 ? (
                           <p className="text-xs text-muted-foreground">
                             ETA: {delivery.estimatedTime}m
@@ -434,13 +493,21 @@ export function LogisticsManagement() {
         <TabsContent value="pending" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Pending Assignments ({mockDispatchData.pendingAssignments.length})</CardTitle>
-              <CardDescription>Orders awaiting driver assignment</CardDescription>
+              <CardTitle>
+                Pending Assignments (
+                {mockDispatchData.pendingAssignments.length})
+              </CardTitle>
+              <CardDescription>
+                Orders awaiting driver assignment
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {mockDispatchData.pendingAssignments.map((order) => (
-                  <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={order.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{order.id}</span>
@@ -449,13 +516,18 @@ export function LogisticsManagement() {
                           {order.items} items
                         </Badge>
                       </div>
-                      <p className="text-sm font-medium">{order.customer.name}</p>
+                      <p className="text-sm font-medium">
+                        {order.customer.name}
+                      </p>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <MapPin className="w-3 h-3" />
                         <span>{order.customer.address}</span>
                       </div>
                       <div className="text-xs text-muted-foreground">
-                        <span>Ordered: {new Date(order.orderTime).toLocaleTimeString()}</span>
+                        <span>
+                          Ordered:{" "}
+                          {new Date(order.orderTime).toLocaleTimeString()}
+                        </span>
                         <span className="ml-4">From: {order.pharmacy}</span>
                       </div>
                       {order.specialInstructions && (
@@ -469,7 +541,14 @@ export function LogisticsManagement() {
                       <div className="text-right">
                         <p className="font-medium">${order.value.toFixed(2)}</p>
                         <p className="text-xs text-muted-foreground">
-                          Delivery: {new Date(order.deliveryWindow.split(' - ')[0]).toLocaleTimeString()} - {new Date(order.deliveryWindow.split(' - ')[1]).toLocaleTimeString()}
+                          Delivery:{" "}
+                          {new Date(
+                            order.deliveryWindow.split(" - ")[0],
+                          ).toLocaleTimeString()}{" "}
+                          -{" "}
+                          {new Date(
+                            order.deliveryWindow.split(" - ")[1],
+                          ).toLocaleTimeString()}
                         </p>
                       </div>
                       <Button size="sm">
@@ -488,17 +567,27 @@ export function LogisticsManagement() {
         <TabsContent value="drivers" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Available Drivers ({mockDispatchData.availableDrivers.length})</CardTitle>
-              <CardDescription>Drivers ready for order assignment</CardDescription>
+              <CardTitle>
+                Available Drivers ({mockDispatchData.availableDrivers.length})
+              </CardTitle>
+              <CardDescription>
+                Drivers ready for order assignment
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {mockDispatchData.availableDrivers.map((driver) => (
-                  <div key={driver.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={driver.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="flex items-center space-x-4">
                       <Avatar className="h-10 w-10">
                         <AvatarFallback className="bg-primary/10 text-primary font-medium text-sm">
-                          {driver.name.split(' ').map(n => n[0]).join('')}
+                          {driver.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">

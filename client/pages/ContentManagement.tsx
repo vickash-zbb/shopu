@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   Download,
   Eye,
   Edit,
@@ -23,14 +23,31 @@ import {
   ExternalLink,
   Tag,
   Users,
-  Settings
+  Settings,
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
@@ -50,11 +67,12 @@ const mockContent = {
       views: 15420,
       template: "homepage",
       seoTitle: "MediCare - Your Trusted Online Pharmacy",
-      seoDescription: "Quality medications and healthcare products delivered to your doorstep. Fast, reliable, and secure.",
-      featured: true
+      seoDescription:
+        "Quality medications and healthcare products delivered to your doorstep. Fast, reliable, and secure.",
+      featured: true,
     },
     {
-      id: "PAGE-002", 
+      id: "PAGE-002",
       title: "About Us",
       slug: "/about",
       type: "page",
@@ -64,8 +82,9 @@ const mockContent = {
       views: 3240,
       template: "standard",
       seoTitle: "About MediCare - Leading Online Pharmacy",
-      seoDescription: "Learn about MediCare's mission to provide accessible healthcare through our online pharmacy platform.",
-      featured: false
+      seoDescription:
+        "Learn about MediCare's mission to provide accessible healthcare through our online pharmacy platform.",
+      featured: false,
     },
     {
       id: "BLOG-001",
@@ -78,10 +97,11 @@ const mockContent = {
       views: 8750,
       template: "blog-post",
       seoTitle: "Complete Guide to Diabetes Management | MediCare Blog",
-      seoDescription: "Expert tips and advice for effective diabetes management, including medication, diet, and lifestyle changes.",
+      seoDescription:
+        "Expert tips and advice for effective diabetes management, including medication, diet, and lifestyle changes.",
       featured: true,
       category: "Health Tips",
-      tags: ["diabetes", "health", "medication", "lifestyle"]
+      tags: ["diabetes", "health", "medication", "lifestyle"],
     },
     {
       id: "FAQ-001",
@@ -94,8 +114,9 @@ const mockContent = {
       views: 5680,
       template: "faq",
       seoTitle: "FAQ - Common Questions About MediCare Services",
-      seoDescription: "Find answers to frequently asked questions about our online pharmacy services, delivery, and prescriptions.",
-      featured: false
+      seoDescription:
+        "Find answers to frequently asked questions about our online pharmacy services, delivery, and prescriptions.",
+      featured: false,
     },
     {
       id: "PROMO-001",
@@ -108,11 +129,12 @@ const mockContent = {
       views: 0,
       template: "promotion",
       seoTitle: "Winter Health Products - Special Offers | MediCare",
-      seoDescription: "Stay healthy this winter with our special offers on vitamins, supplements, and cold remedies.",
+      seoDescription:
+        "Stay healthy this winter with our special offers on vitamins, supplements, and cold remedies.",
       featured: false,
       startDate: "2024-01-20T00:00:00Z",
-      endDate: "2024-03-20T23:59:59Z"
-    }
+      endDate: "2024-03-20T23:59:59Z",
+    },
   ],
   media: [
     {
@@ -123,7 +145,7 @@ const mockContent = {
       dimensions: "1920x1080",
       uploadDate: "2024-01-15T10:00:00Z",
       usedIn: ["Homepage", "About Us"],
-      url: "/uploads/homepage-banner.jpg"
+      url: "/uploads/homepage-banner.jpg",
     },
     {
       id: "MED-002",
@@ -133,7 +155,7 @@ const mockContent = {
       dimensions: "1280x720",
       uploadDate: "2024-01-14T14:30:00Z",
       usedIn: ["Product Pages"],
-      url: "/uploads/product-demo.mp4"
+      url: "/uploads/product-demo.mp4",
     },
     {
       id: "MED-003",
@@ -143,9 +165,9 @@ const mockContent = {
       dimensions: "800x1200",
       uploadDate: "2024-01-13T16:00:00Z",
       usedIn: ["Blog Post"],
-      url: "/uploads/diabetes-infographic.png"
-    }
-  ]
+      url: "/uploads/diabetes-infographic.png",
+    },
+  ],
 };
 
 const getStatusBadge = (status: string) => {
@@ -164,10 +186,10 @@ const getStatusBadge = (status: string) => {
   };
 
   const Icon = icons[status as keyof typeof icons];
-  
+
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("font-medium", styles[status as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
@@ -194,8 +216,8 @@ const getTypeBadge = (type: string) => {
   const Icon = icons[type as keyof typeof icons];
 
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("text-xs", styles[type as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
@@ -212,9 +234,10 @@ export function ContentManagement() {
   const [showEditor, setShowEditor] = useState(false);
 
   const filteredContent = mockContent.pages.filter((content) => {
-    const matchesSearch = content.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         content.slug.toLowerCase().includes(searchQuery.toLowerCase());
-    
+    const matchesSearch =
+      content.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      content.slug.toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesType = typeFilter === "all" || content.type === typeFilter;
 
     return matchesSearch && matchesType;
@@ -222,10 +245,11 @@ export function ContentManagement() {
 
   const getContentCounts = () => {
     return {
-      pages: mockContent.pages.filter(c => c.type === 'page').length,
-      blog: mockContent.pages.filter(c => c.type === 'blog').length,
-      faq: mockContent.pages.filter(c => c.type === 'faq').length,
-      promotions: mockContent.pages.filter(c => c.type === 'promotion').length,
+      pages: mockContent.pages.filter((c) => c.type === "page").length,
+      blog: mockContent.pages.filter((c) => c.type === "blog").length,
+      faq: mockContent.pages.filter((c) => c.type === "faq").length,
+      promotions: mockContent.pages.filter((c) => c.type === "promotion")
+        .length,
     };
   };
 
@@ -236,7 +260,9 @@ export function ContentManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Content Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Content Management
+          </h1>
           <p className="text-muted-foreground">
             Manage website content, pages, and promotional materials.
           </p>
@@ -274,7 +300,9 @@ export function ContentManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {mockContent.pages.reduce((sum, p) => sum + p.views, 0).toLocaleString()}
+              {mockContent.pages
+                .reduce((sum, p) => sum + p.views, 0)
+                .toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-success">+12%</span> from last month
@@ -288,9 +316,7 @@ export function ContentManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{mockContent.media.length}</div>
-            <p className="text-xs text-muted-foreground">
-              Images and videos
-            </p>
+            <p className="text-xs text-muted-foreground">Images and videos</p>
           </CardContent>
         </Card>
         <Card>
@@ -300,11 +326,9 @@ export function ContentManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {mockContent.pages.filter(p => p.status === 'draft').length}
+              {mockContent.pages.filter((p) => p.status === "draft").length}
             </div>
-            <p className="text-xs text-muted-foreground">
-              Unpublished content
-            </p>
+            <p className="text-xs text-muted-foreground">Unpublished content</p>
           </CardContent>
         </Card>
       </div>
@@ -363,13 +387,15 @@ export function ContentManagement() {
           <Card>
             <CardHeader>
               <CardTitle>Content ({filteredContent.length})</CardTitle>
-              <CardDescription>Manage your website pages and content</CardDescription>
+              <CardDescription>
+                Manage your website pages and content
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {filteredContent.map((content) => (
-                  <div 
-                    key={content.id} 
+                  <div
+                    key={content.id}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
                     onClick={() => setSelectedContent(content)}
                   >
@@ -383,15 +409,25 @@ export function ContentManagement() {
                           {getStatusBadge(content.status)}
                           {getTypeBadge(content.type)}
                           {content.featured && (
-                            <Badge variant="outline" className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200"
+                            >
                               Featured
                             </Badge>
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground">{content.slug}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {content.slug}
+                        </p>
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
                           <span>By {content.author}</span>
-                          <span>Modified: {new Date(content.lastModified).toLocaleDateString()}</span>
+                          <span>
+                            Modified:{" "}
+                            {new Date(
+                              content.lastModified,
+                            ).toLocaleDateString()}
+                          </span>
                           <span>{content.views.toLocaleString()} views</span>
                         </div>
                       </div>
@@ -440,8 +476,12 @@ export function ContentManagement() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Media Library ({mockContent.media.length})</CardTitle>
-                  <CardDescription>Manage images, videos, and other media files</CardDescription>
+                  <CardTitle>
+                    Media Library ({mockContent.media.length})
+                  </CardTitle>
+                  <CardDescription>
+                    Manage images, videos, and other media files
+                  </CardDescription>
                 </div>
                 <Button size="sm">
                   <Upload className="w-4 h-4 mr-2" />
@@ -454,21 +494,26 @@ export function ContentManagement() {
                 {mockContent.media.map((media) => (
                   <div key={media.id} className="border rounded-lg p-4">
                     <div className="aspect-video bg-muted rounded-lg mb-3 flex items-center justify-center">
-                      {media.type === 'image' ? (
+                      {media.type === "image" ? (
                         <Image className="w-8 h-8 text-muted-foreground" />
                       ) : (
                         <Video className="w-8 h-8 text-muted-foreground" />
                       )}
                     </div>
                     <div className="space-y-2">
-                      <p className="font-medium text-sm truncate">{media.name}</p>
+                      <p className="font-medium text-sm truncate">
+                        {media.name}
+                      </p>
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <span>{media.size}</span>
                         <span>{media.dimensions}</span>
                       </div>
                       <div className="text-xs text-muted-foreground">
-                        <p>Used in: {media.usedIn.join(', ')}</p>
-                        <p>Uploaded: {new Date(media.uploadDate).toLocaleDateString()}</p>
+                        <p>Used in: {media.usedIn.join(", ")}</p>
+                        <p>
+                          Uploaded:{" "}
+                          {new Date(media.uploadDate).toLocaleDateString()}
+                        </p>
                       </div>
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm" className="flex-1">
@@ -494,20 +539,28 @@ export function ContentManagement() {
             <Card>
               <CardHeader>
                 <CardTitle>SEO Overview</CardTitle>
-                <CardDescription>Search engine optimization metrics</CardDescription>
+                <CardDescription>
+                  Search engine optimization metrics
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground">Total Indexed Pages</p>
+                    <p className="text-sm text-muted-foreground">
+                      Total Indexed Pages
+                    </p>
                     <p className="text-2xl font-bold">47</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Avg. Page Speed</p>
+                    <p className="text-sm text-muted-foreground">
+                      Avg. Page Speed
+                    </p>
                     <p className="text-2xl font-bold">92</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Mobile Friendly</p>
+                    <p className="text-sm text-muted-foreground">
+                      Mobile Friendly
+                    </p>
                     <p className="text-2xl font-bold text-success">98%</p>
                   </div>
                   <div>
@@ -521,12 +574,16 @@ export function ContentManagement() {
             <Card>
               <CardHeader>
                 <CardTitle>Analytics Summary</CardTitle>
-                <CardDescription>Website traffic and engagement metrics</CardDescription>
+                <CardDescription>
+                  Website traffic and engagement metrics
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground">Monthly Visitors</p>
+                    <p className="text-sm text-muted-foreground">
+                      Monthly Visitors
+                    </p>
                     <p className="text-2xl font-bold">12.4K</p>
                   </div>
                   <div>
@@ -534,7 +591,9 @@ export function ContentManagement() {
                     <p className="text-2xl font-bold">33.1K</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Avg. Session</p>
+                    <p className="text-sm text-muted-foreground">
+                      Avg. Session
+                    </p>
                     <p className="text-2xl font-bold">2m 45s</p>
                   </div>
                   <div>
@@ -549,21 +608,29 @@ export function ContentManagement() {
           <Card>
             <CardHeader>
               <CardTitle>Global SEO Settings</CardTitle>
-              <CardDescription>Configure site-wide SEO preferences</CardDescription>
+              <CardDescription>
+                Configure site-wide SEO preferences
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Site Title</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Site Title
+                  </label>
                   <Input defaultValue="MediCare - Your Trusted Online Pharmacy" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Site Description</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Site Description
+                  </label>
                   <Input defaultValue="Quality medications and healthcare products delivered to your doorstep." />
                 </div>
               </div>
               <div>
-                <label className="text-sm font-medium mb-2 block">Meta Keywords</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Meta Keywords
+                </label>
                 <Input defaultValue="online pharmacy, medications, healthcare, prescriptions, delivery" />
               </div>
               <div className="flex items-center space-x-2">
@@ -590,8 +657,8 @@ export function ContentManagement() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Create New Content</CardTitle>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   onClick={() => setShowEditor(false)}
                 >
@@ -602,7 +669,9 @@ export function ContentManagement() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Content Type</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Content Type
+                  </label>
                   <Select defaultValue="page">
                     <SelectTrigger>
                       <SelectValue />
@@ -616,7 +685,9 @@ export function ContentManagement() {
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Status</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Status
+                  </label>
                   <Select defaultValue="draft">
                     <SelectTrigger>
                       <SelectValue />
@@ -629,36 +700,44 @@ export function ContentManagement() {
                   </Select>
                 </div>
               </div>
-              
+
               <div>
                 <label className="text-sm font-medium mb-2 block">Title</label>
                 <Input placeholder="Enter content title..." />
               </div>
-              
+
               <div>
-                <label className="text-sm font-medium mb-2 block">URL Slug</label>
+                <label className="text-sm font-medium mb-2 block">
+                  URL Slug
+                </label>
                 <Input placeholder="/page-url" />
               </div>
-              
+
               <div>
-                <label className="text-sm font-medium mb-2 block">Content</label>
-                <Textarea 
-                  placeholder="Enter your content..." 
+                <label className="text-sm font-medium mb-2 block">
+                  Content
+                </label>
+                <Textarea
+                  placeholder="Enter your content..."
                   className="min-h-[200px]"
                 />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">SEO Title</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    SEO Title
+                  </label>
                   <Input placeholder="SEO optimized title..." />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">SEO Description</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    SEO Description
+                  </label>
                   <Input placeholder="Meta description..." />
                 </div>
               </div>
-              
+
               <div className="flex gap-2 pt-4">
                 <Button className="flex-1">
                   <Save className="w-4 h-4 mr-2" />

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   Download,
   Eye,
   Edit,
@@ -22,14 +22,31 @@ import {
   Navigation,
   Shield,
   FileText,
-  X
+  X,
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
@@ -53,7 +70,7 @@ const mockDeliveryStaff = [
     lastActive: "2024-01-15T14:30:00Z",
     completedDeliveries: 234,
     averageRating: 4.8,
-    totalEarnings: 5420.50,
+    totalEarnings: 5420.5,
     currentOrders: 2,
     todayDeliveries: 8,
     onTimeDelivery: 94.5,
@@ -62,23 +79,23 @@ const mockDeliveryStaff = [
     emergencyContact: {
       name: "Sarah Johnson",
       phone: "+1 (555) 456-7891",
-      relationship: "Wife"
+      relationship: "Wife",
     },
     documents: {
       license: { verified: true, expiry: "2026-12-31" },
       insurance: { verified: true, expiry: "2025-06-30" },
-      backgroundCheck: { verified: true, date: "2023-08-10" }
+      backgroundCheck: { verified: true, date: "2023-08-10" },
     },
     performanceMetrics: {
       deliverySpeed: 92,
       customerService: 96,
-      reliability: 88
-    }
+      reliability: 88,
+    },
   },
   {
     id: "DRV-002",
     name: "Emily Davis",
-    email: "emily.davis@medicare.com", 
+    email: "emily.davis@medicare.com",
     phone: "+1 (555) 789-0123",
     avatar: null,
     status: "active",
@@ -100,18 +117,18 @@ const mockDeliveryStaff = [
     emergencyContact: {
       name: "Robert Davis",
       phone: "+1 (555) 789-0124",
-      relationship: "Father"
+      relationship: "Father",
     },
     documents: {
       license: { verified: true, expiry: "2027-03-15" },
       insurance: { verified: true, expiry: "2025-09-20" },
-      backgroundCheck: { verified: true, date: "2023-09-15" }
+      backgroundCheck: { verified: true, date: "2023-09-15" },
     },
     performanceMetrics: {
       deliverySpeed: 95,
       customerService: 98,
-      reliability: 94
-    }
+      reliability: 94,
+    },
   },
   {
     id: "DRV-003",
@@ -138,19 +155,19 @@ const mockDeliveryStaff = [
     emergencyContact: {
       name: "Mary Wilson",
       phone: "+1 (555) 234-5679",
-      relationship: "Mother"
+      relationship: "Mother",
     },
     documents: {
       license: { verified: false, expiry: "2024-02-28" },
       insurance: { verified: true, expiry: "2025-01-15" },
-      backgroundCheck: { verified: false, date: "2023-07-05" }
+      backgroundCheck: { verified: false, date: "2023-07-05" },
     },
     performanceMetrics: {
       deliverySpeed: 68,
       customerService: 72,
-      reliability: 45
-    }
-  }
+      reliability: 45,
+    },
+  },
 ];
 
 const getStatusBadge = (status: string, onDuty?: boolean) => {
@@ -162,7 +179,7 @@ const getStatusBadge = (status: string, onDuty?: boolean) => {
       </Badge>
     );
   }
-  
+
   const styles = {
     active: "bg-blue-100 text-blue-800 border-blue-200",
     inactive: "bg-gray-100 text-gray-800 border-gray-200",
@@ -176,10 +193,10 @@ const getStatusBadge = (status: string, onDuty?: boolean) => {
   };
 
   const Icon = icons[status as keyof typeof icons];
-  
+
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("font-medium", styles[status as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
@@ -197,9 +214,12 @@ const getVehicleBadge = (vehicleType: string) => {
   };
 
   return (
-    <Badge 
-      variant="outline" 
-      className={cn("text-xs", styles[vehicleType.toLowerCase() as keyof typeof styles])}
+    <Badge
+      variant="outline"
+      className={cn(
+        "text-xs",
+        styles[vehicleType.toLowerCase() as keyof typeof styles],
+      )}
     >
       {vehicleType.toUpperCase()}
     </Badge>
@@ -213,15 +233,18 @@ export function DeliveryStaffManagement() {
   const [selectedDriver, setSelectedDriver] = useState<any>(null);
 
   const filteredStaff = mockDeliveryStaff.filter((staff) => {
-    const matchesSearch = staff.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         staff.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         staff.id.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesStatus = statusFilter === "all" || staff.status === statusFilter;
-    const matchesTab = selectedTab === "all" || 
-                      (selectedTab === "on_duty" && staff.onDuty) ||
-                      (selectedTab === "off_duty" && !staff.onDuty) ||
-                      staff.status === selectedTab;
+    const matchesSearch =
+      staff.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      staff.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      staff.id.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "all" || staff.status === statusFilter;
+    const matchesTab =
+      selectedTab === "all" ||
+      (selectedTab === "on_duty" && staff.onDuty) ||
+      (selectedTab === "off_duty" && !staff.onDuty) ||
+      staff.status === selectedTab;
 
     return matchesSearch && matchesStatus && matchesTab;
   });
@@ -229,9 +252,12 @@ export function DeliveryStaffManagement() {
   const getStatusCounts = () => {
     return {
       all: mockDeliveryStaff.length,
-      on_duty: mockDeliveryStaff.filter(s => s.onDuty).length,
-      off_duty: mockDeliveryStaff.filter(s => !s.onDuty && s.status === 'active').length,
-      suspended: mockDeliveryStaff.filter(s => s.status === 'suspended').length,
+      on_duty: mockDeliveryStaff.filter((s) => s.onDuty).length,
+      off_duty: mockDeliveryStaff.filter(
+        (s) => !s.onDuty && s.status === "active",
+      ).length,
+      suspended: mockDeliveryStaff.filter((s) => s.status === "suspended")
+        .length,
     };
   };
 
@@ -242,9 +268,12 @@ export function DeliveryStaffManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Delivery Staff Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Delivery Staff Management
+          </h1>
           <p className="text-muted-foreground">
-            Manage delivery personnel profiles, assignments, and performance metrics.
+            Manage delivery personnel profiles, assignments, and performance
+            metrics.
           </p>
         </div>
         <div className="flex items-center space-x-2">
@@ -280,9 +309,7 @@ export function DeliveryStaffManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{statusCounts.on_duty}</div>
-            <p className="text-xs text-muted-foreground">
-              Currently active
-            </p>
+            <p className="text-xs text-muted-foreground">Currently active</p>
           </CardContent>
         </Card>
         <Card>
@@ -292,7 +319,10 @@ export function DeliveryStaffManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {(mockDeliveryStaff.reduce((sum, s) => sum + s.averageRating, 0) / mockDeliveryStaff.length).toFixed(1)}
+              {(
+                mockDeliveryStaff.reduce((sum, s) => sum + s.averageRating, 0) /
+                mockDeliveryStaff.length
+              ).toFixed(1)}
             </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-success">+0.2</span> from last month
@@ -301,16 +331,16 @@ export function DeliveryStaffManagement() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Deliveries Today</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Deliveries Today
+            </CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {mockDeliveryStaff.reduce((sum, s) => sum + s.todayDeliveries, 0)}
             </div>
-            <p className="text-xs text-muted-foreground">
-              Across all drivers
-            </p>
+            <p className="text-xs text-muted-foreground">Across all drivers</p>
           </CardContent>
         </Card>
       </div>
@@ -378,14 +408,17 @@ export function DeliveryStaffManagement() {
             <CardHeader>
               <CardTitle>Delivery Staff ({filteredStaff.length})</CardTitle>
               <CardDescription>
-                {selectedTab === "all" ? "All drivers" : `${selectedTab.replace('_', ' ')} drivers`} in the system
+                {selectedTab === "all"
+                  ? "All drivers"
+                  : `${selectedTab.replace("_", " ")} drivers`}{" "}
+                in the system
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {filteredStaff.map((staff) => (
-                  <div 
-                    key={staff.id} 
+                  <div
+                    key={staff.id}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
                     onClick={() => setSelectedDriver(staff)}
                   >
@@ -393,7 +426,10 @@ export function DeliveryStaffManagement() {
                       <Avatar className="h-12 w-12">
                         <AvatarImage src={staff.avatar} />
                         <AvatarFallback className="bg-primary/10 text-primary font-medium">
-                          {staff.name.split(' ').map(n => n[0]).join('')}
+                          {staff.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
@@ -403,7 +439,9 @@ export function DeliveryStaffManagement() {
                           {getVehicleBadge(staff.vehicleType)}
                           <div className="flex items-center gap-1">
                             <Star className="w-3 h-3 text-yellow-500 fill-current" />
-                            <span className="text-xs font-medium">{staff.averageRating}</span>
+                            <span className="text-xs font-medium">
+                              {staff.averageRating}
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -421,7 +459,10 @@ export function DeliveryStaffManagement() {
                           <span>{staff.todayDeliveries} today</span>
                           <span>{staff.onTimeDelivery}% on-time</span>
                           {staff.currentOrders > 0 && (
-                            <Badge variant="outline" className="text-xs bg-orange-50 text-orange-700 border-orange-200">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-orange-50 text-orange-700 border-orange-200"
+                            >
                               {staff.currentOrders} active orders
                             </Badge>
                           )}
@@ -430,7 +471,9 @@ export function DeliveryStaffManagement() {
                     </div>
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="font-medium">${staff.totalEarnings.toLocaleString()}</p>
+                        <p className="font-medium">
+                          ${staff.totalEarnings.toLocaleString()}
+                        </p>
                         <p className="text-xs text-muted-foreground">
                           {staff.vehicleNumber}
                         </p>
@@ -463,11 +506,13 @@ export function DeliveryStaffManagement() {
                     </div>
                   </div>
                 ))}
-                
+
                 {filteredStaff.length === 0 && (
                   <div className="text-center py-8">
                     <Truck className="mx-auto h-12 w-12 text-muted-foreground" />
-                    <h3 className="mt-2 text-sm font-medium">No drivers found</h3>
+                    <h3 className="mt-2 text-sm font-medium">
+                      No drivers found
+                    </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Try adjusting your search or filter criteria.
                     </p>
@@ -489,19 +534,27 @@ export function DeliveryStaffManagement() {
                   <Avatar className="h-16 w-16">
                     <AvatarImage src={selectedDriver.avatar} />
                     <AvatarFallback className="bg-primary/10 text-primary font-medium text-xl">
-                      {selectedDriver.name.split(' ').map((n: string) => n[0]).join('')}
+                      {selectedDriver.name
+                        .split(" ")
+                        .map((n: string) => n[0])
+                        .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-2xl">{selectedDriver.name}</CardTitle>
+                    <CardTitle className="text-2xl">
+                      {selectedDriver.name}
+                    </CardTitle>
                     <div className="flex items-center gap-2 mt-1">
-                      {getStatusBadge(selectedDriver.status, selectedDriver.onDuty)}
+                      {getStatusBadge(
+                        selectedDriver.status,
+                        selectedDriver.onDuty,
+                      )}
                       {getVehicleBadge(selectedDriver.vehicleType)}
                     </div>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   onClick={() => setSelectedDriver(null)}
                 >
@@ -537,23 +590,40 @@ export function DeliveryStaffManagement() {
                     <div>
                       <div className="flex justify-between text-sm mb-1">
                         <span>Delivery Speed</span>
-                        <span>{selectedDriver.performanceMetrics.deliverySpeed}%</span>
+                        <span>
+                          {selectedDriver.performanceMetrics.deliverySpeed}%
+                        </span>
                       </div>
-                      <Progress value={selectedDriver.performanceMetrics.deliverySpeed} className="h-2" />
+                      <Progress
+                        value={selectedDriver.performanceMetrics.deliverySpeed}
+                        className="h-2"
+                      />
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-1">
                         <span>Customer Service</span>
-                        <span>{selectedDriver.performanceMetrics.customerService}%</span>
+                        <span>
+                          {selectedDriver.performanceMetrics.customerService}%
+                        </span>
                       </div>
-                      <Progress value={selectedDriver.performanceMetrics.customerService} className="h-2" />
+                      <Progress
+                        value={
+                          selectedDriver.performanceMetrics.customerService
+                        }
+                        className="h-2"
+                      />
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-1">
                         <span>Reliability</span>
-                        <span>{selectedDriver.performanceMetrics.reliability}%</span>
+                        <span>
+                          {selectedDriver.performanceMetrics.reliability}%
+                        </span>
                       </div>
-                      <Progress value={selectedDriver.performanceMetrics.reliability} className="h-2" />
+                      <Progress
+                        value={selectedDriver.performanceMetrics.reliability}
+                        className="h-2"
+                      />
                     </div>
                   </div>
                 </div>
@@ -565,19 +635,27 @@ export function DeliveryStaffManagement() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
                     <p className="text-muted-foreground">Total Deliveries</p>
-                    <p className="font-medium text-lg">{selectedDriver.completedDeliveries}</p>
+                    <p className="font-medium text-lg">
+                      {selectedDriver.completedDeliveries}
+                    </p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Today's Deliveries</p>
-                    <p className="font-medium text-lg">{selectedDriver.todayDeliveries}</p>
+                    <p className="font-medium text-lg">
+                      {selectedDriver.todayDeliveries}
+                    </p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">On-Time Rate</p>
-                    <p className="font-medium text-lg">{selectedDriver.onTimeDelivery}%</p>
+                    <p className="font-medium text-lg">
+                      {selectedDriver.onTimeDelivery}%
+                    </p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Total Earnings</p>
-                    <p className="font-medium text-lg">${selectedDriver.totalEarnings.toLocaleString()}</p>
+                    <p className="font-medium text-lg">
+                      ${selectedDriver.totalEarnings.toLocaleString()}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -592,11 +670,15 @@ export function DeliveryStaffManagement() {
                   </div>
                   <div>
                     <p className="text-muted-foreground">Vehicle Number</p>
-                    <p className="font-medium">{selectedDriver.vehicleNumber}</p>
+                    <p className="font-medium">
+                      {selectedDriver.vehicleNumber}
+                    </p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">License Number</p>
-                    <p className="font-medium">{selectedDriver.licenseNumber}</p>
+                    <p className="font-medium">
+                      {selectedDriver.licenseNumber}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -623,7 +705,10 @@ export function DeliveryStaffManagement() {
                         </Badge>
                       )}
                       <span className="text-xs text-muted-foreground">
-                        Exp: {new Date(selectedDriver.documents.license.expiry).toLocaleDateString()}
+                        Exp:{" "}
+                        {new Date(
+                          selectedDriver.documents.license.expiry,
+                        ).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -645,7 +730,10 @@ export function DeliveryStaffManagement() {
                         </Badge>
                       )}
                       <span className="text-xs text-muted-foreground">
-                        Exp: {new Date(selectedDriver.documents.insurance.expiry).toLocaleDateString()}
+                        Exp:{" "}
+                        {new Date(
+                          selectedDriver.documents.insurance.expiry,
+                        ).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -667,7 +755,10 @@ export function DeliveryStaffManagement() {
                         </Badge>
                       )}
                       <span className="text-xs text-muted-foreground">
-                        Date: {new Date(selectedDriver.documents.backgroundCheck.date).toLocaleDateString()}
+                        Date:{" "}
+                        {new Date(
+                          selectedDriver.documents.backgroundCheck.date,
+                        ).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -678,9 +769,18 @@ export function DeliveryStaffManagement() {
               <div>
                 <h4 className="font-medium mb-3">Emergency Contact</h4>
                 <div className="text-sm">
-                  <p><strong>Name:</strong> {selectedDriver.emergencyContact.name}</p>
-                  <p><strong>Phone:</strong> {selectedDriver.emergencyContact.phone}</p>
-                  <p><strong>Relationship:</strong> {selectedDriver.emergencyContact.relationship}</p>
+                  <p>
+                    <strong>Name:</strong>{" "}
+                    {selectedDriver.emergencyContact.name}
+                  </p>
+                  <p>
+                    <strong>Phone:</strong>{" "}
+                    {selectedDriver.emergencyContact.phone}
+                  </p>
+                  <p>
+                    <strong>Relationship:</strong>{" "}
+                    {selectedDriver.emergencyContact.relationship}
+                  </p>
                 </div>
               </div>
 

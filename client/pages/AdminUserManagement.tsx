@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   Download,
   Eye,
   Edit,
@@ -21,14 +21,31 @@ import {
   UserX,
   Crown,
   Users,
-  X
+  X,
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Switch } from "@/components/ui/switch";
@@ -51,21 +68,21 @@ const mockAdminUsers = [
     permissions: [
       "dashboard.view",
       "orders.manage",
-      "users.manage", 
+      "users.manage",
       "staff.manage",
       "products.manage",
       "settings.manage",
       "reports.view",
-      "system.admin"
+      "system.admin",
     ],
     sessionsCount: 156,
     loginAttempts: 0,
     notes: "Primary system administrator",
     twoFactorEnabled: true,
-    ipWhitelist: ["192.168.1.100", "203.0.113.50"]
+    ipWhitelist: ["192.168.1.100", "203.0.113.50"],
   },
   {
-    id: "ADM-002", 
+    id: "ADM-002",
     name: "Sarah Johnson",
     email: "sarah.johnson@medicare.com",
     phone: "+1 (555) 333-4444",
@@ -82,18 +99,18 @@ const mockAdminUsers = [
       "users.view",
       "staff.view",
       "products.manage",
-      "reports.view"
+      "reports.view",
     ],
     sessionsCount: 89,
     loginAttempts: 0,
     notes: "Operations manager with order management focus",
     twoFactorEnabled: true,
-    ipWhitelist: ["192.168.1.101"]
+    ipWhitelist: ["192.168.1.101"],
   },
   {
     id: "ADM-003",
     name: "Mike Davis",
-    email: "mike.davis@medicare.com", 
+    email: "mike.davis@medicare.com",
     phone: "+1 (555) 555-6666",
     avatar: null,
     role: "moderator",
@@ -106,13 +123,13 @@ const mockAdminUsers = [
       "dashboard.view",
       "orders.view",
       "users.view",
-      "reports.view"
+      "reports.view",
     ],
     sessionsCount: 234,
     loginAttempts: 1,
     notes: "Customer service representative",
     twoFactorEnabled: false,
-    ipWhitelist: []
+    ipWhitelist: [],
   },
   {
     id: "ADM-004",
@@ -131,14 +148,14 @@ const mockAdminUsers = [
       "orders.view",
       "users.manage",
       "staff.manage",
-      "settings.view"
+      "settings.view",
     ],
     sessionsCount: 67,
     loginAttempts: 3,
     notes: "Account suspended pending security review",
     twoFactorEnabled: true,
-    ipWhitelist: ["192.168.1.102", "203.0.113.51"]
-  }
+    ipWhitelist: ["192.168.1.102", "203.0.113.51"],
+  },
 ];
 
 const getRoleBadge = (role: string) => {
@@ -157,14 +174,14 @@ const getRoleBadge = (role: string) => {
   };
 
   const Icon = icons[role as keyof typeof icons];
-  
+
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("font-medium", styles[role as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
-      {role.replace('_', ' ').toUpperCase()}
+      {role.replace("_", " ").toUpperCase()}
     </Badge>
   );
 };
@@ -183,10 +200,10 @@ const getStatusBadge = (status: string) => {
   };
 
   const Icon = icons[status as keyof typeof icons];
-  
+
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("font-medium", styles[status as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
@@ -203,10 +220,11 @@ export function AdminUserManagement() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const filteredAdmins = mockAdminUsers.filter((admin) => {
-    const matchesSearch = admin.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         admin.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         admin.id.toLowerCase().includes(searchQuery.toLowerCase());
-    
+    const matchesSearch =
+      admin.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      admin.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      admin.id.toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesRole = roleFilter === "all" || admin.role === roleFilter;
     const matchesTab = selectedTab === "all" || admin.status === selectedTab;
 
@@ -216,9 +234,9 @@ export function AdminUserManagement() {
   const getStatusCounts = () => {
     return {
       all: mockAdminUsers.length,
-      active: mockAdminUsers.filter(a => a.status === 'active').length,
-      inactive: mockAdminUsers.filter(a => a.status === 'inactive').length,
-      suspended: mockAdminUsers.filter(a => a.status === 'suspended').length,
+      active: mockAdminUsers.filter((a) => a.status === "active").length,
+      inactive: mockAdminUsers.filter((a) => a.status === "inactive").length,
+      suspended: mockAdminUsers.filter((a) => a.status === "suspended").length,
     };
   };
 
@@ -229,7 +247,9 @@ export function AdminUserManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Admin User Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Admin User Management
+          </h1>
           <p className="text-muted-foreground">
             Manage admin roles, permissions, and system access controls.
           </p>
@@ -267,9 +287,7 @@ export function AdminUserManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{statusCounts.active}</div>
-            <p className="text-xs text-muted-foreground">
-              Currently active
-            </p>
+            <p className="text-xs text-muted-foreground">Currently active</p>
           </CardContent>
         </Card>
         <Card>
@@ -279,25 +297,23 @@ export function AdminUserManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {mockAdminUsers.filter(a => a.twoFactorEnabled).length}
+              {mockAdminUsers.filter((a) => a.twoFactorEnabled).length}
             </div>
-            <p className="text-xs text-muted-foreground">
-              Security enabled
-            </p>
+            <p className="text-xs text-muted-foreground">Security enabled</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Sessions</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Sessions
+            </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {mockAdminUsers.reduce((sum, a) => sum + a.sessionsCount, 0)}
             </div>
-            <p className="text-xs text-muted-foreground">
-              All time logins
-            </p>
+            <p className="text-xs text-muted-foreground">All time logins</p>
           </CardContent>
         </Card>
       </div>
@@ -366,14 +382,17 @@ export function AdminUserManagement() {
             <CardHeader>
               <CardTitle>Admin Users ({filteredAdmins.length})</CardTitle>
               <CardDescription>
-                {selectedTab === "all" ? "All admin users" : `${selectedTab} admin users`} in the system
+                {selectedTab === "all"
+                  ? "All admin users"
+                  : `${selectedTab} admin users`}{" "}
+                in the system
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {filteredAdmins.map((admin) => (
-                  <div 
-                    key={admin.id} 
+                  <div
+                    key={admin.id}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
                     onClick={() => setSelectedAdmin(admin)}
                   >
@@ -381,7 +400,10 @@ export function AdminUserManagement() {
                       <Avatar className="h-12 w-12">
                         <AvatarImage src={admin.avatar} />
                         <AvatarFallback className="bg-primary/10 text-primary font-medium">
-                          {admin.name.split(' ').map(n => n[0]).join('')}
+                          {admin.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
@@ -390,7 +412,10 @@ export function AdminUserManagement() {
                           {getStatusBadge(admin.status)}
                           {getRoleBadge(admin.role)}
                           {admin.twoFactorEnabled && (
-                            <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-green-50 text-green-700 border-green-200"
+                            >
                               <Key className="w-3 h-3 mr-1" />
                               2FA
                             </Badge>
@@ -407,11 +432,17 @@ export function AdminUserManagement() {
                           </div>
                         </div>
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                          <span>Last login: {new Date(admin.lastLogin).toLocaleDateString()}</span>
+                          <span>
+                            Last login:{" "}
+                            {new Date(admin.lastLogin).toLocaleDateString()}
+                          </span>
                           <span>{admin.sessionsCount} sessions</span>
                           <span>{admin.permissions.length} permissions</span>
                           {admin.loginAttempts > 0 && (
-                            <Badge variant="outline" className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200"
+                            >
                               <AlertTriangle className="w-3 h-3 mr-1" />
                               {admin.loginAttempts} failed attempts
                             </Badge>
@@ -422,7 +453,10 @@ export function AdminUserManagement() {
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
                         <p className="text-sm font-medium">
-                          {new Date(admin.lastActive).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          {new Date(admin.lastActive).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           Last active
@@ -463,11 +497,13 @@ export function AdminUserManagement() {
                     </div>
                   </div>
                 ))}
-                
+
                 {filteredAdmins.length === 0 && (
                   <div className="text-center py-8">
                     <Shield className="mx-auto h-12 w-12 text-muted-foreground" />
-                    <h3 className="mt-2 text-sm font-medium">No admin users found</h3>
+                    <h3 className="mt-2 text-sm font-medium">
+                      No admin users found
+                    </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Try adjusting your search or filter criteria.
                     </p>
@@ -489,19 +525,24 @@ export function AdminUserManagement() {
                   <Avatar className="h-16 w-16">
                     <AvatarImage src={selectedAdmin.avatar} />
                     <AvatarFallback className="bg-primary/10 text-primary font-medium text-xl">
-                      {selectedAdmin.name.split(' ').map((n: string) => n[0]).join('')}
+                      {selectedAdmin.name
+                        .split(" ")
+                        .map((n: string) => n[0])
+                        .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-2xl">{selectedAdmin.name}</CardTitle>
+                    <CardTitle className="text-2xl">
+                      {selectedAdmin.name}
+                    </CardTitle>
                     <div className="flex items-center gap-2 mt-1">
                       {getStatusBadge(selectedAdmin.status)}
                       {getRoleBadge(selectedAdmin.role)}
                     </div>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   onClick={() => setSelectedAdmin(null)}
                 >
@@ -536,19 +577,27 @@ export function AdminUserManagement() {
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
                       <p className="text-muted-foreground">Join Date</p>
-                      <p className="font-medium">{new Date(selectedAdmin.joinDate).toLocaleDateString()}</p>
+                      <p className="font-medium">
+                        {new Date(selectedAdmin.joinDate).toLocaleDateString()}
+                      </p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Last Login</p>
-                      <p className="font-medium">{new Date(selectedAdmin.lastLogin).toLocaleDateString()}</p>
+                      <p className="font-medium">
+                        {new Date(selectedAdmin.lastLogin).toLocaleDateString()}
+                      </p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Sessions</p>
-                      <p className="font-medium">{selectedAdmin.sessionsCount}</p>
+                      <p className="font-medium">
+                        {selectedAdmin.sessionsCount}
+                      </p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Failed Attempts</p>
-                      <p className="font-medium">{selectedAdmin.loginAttempts}</p>
+                      <p className="font-medium">
+                        {selectedAdmin.loginAttempts}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -589,10 +638,16 @@ export function AdminUserManagement() {
 
               {/* Permissions */}
               <div>
-                <h4 className="font-medium mb-3">Permissions ({selectedAdmin.permissions.length})</h4>
+                <h4 className="font-medium mb-3">
+                  Permissions ({selectedAdmin.permissions.length})
+                </h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {selectedAdmin.permissions.map((permission: string) => (
-                    <Badge key={permission} variant="outline" className="text-xs justify-center">
+                    <Badge
+                      key={permission}
+                      variant="outline"
+                      className="text-xs justify-center"
+                    >
                       {permission}
                     </Badge>
                   ))}
@@ -605,7 +660,11 @@ export function AdminUserManagement() {
                   <h4 className="font-medium mb-3">IP Whitelist</h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {selectedAdmin.ipWhitelist.map((ip: string) => (
-                      <Badge key={ip} variant="outline" className="text-xs justify-center font-mono">
+                      <Badge
+                        key={ip}
+                        variant="outline"
+                        className="text-xs justify-center font-mono"
+                      >
                         {ip}
                       </Badge>
                     ))}
@@ -617,7 +676,9 @@ export function AdminUserManagement() {
               {selectedAdmin.notes && (
                 <div>
                   <h4 className="font-medium mb-3">Notes</h4>
-                  <p className="text-sm text-muted-foreground">{selectedAdmin.notes}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {selectedAdmin.notes}
+                  </p>
                 </div>
               )}
 
@@ -663,7 +724,8 @@ export function AdminUserManagement() {
                 </Button>
               </div>
               <CardDescription>
-                Create a new administrator account with specific roles and permissions.
+                Create a new administrator account with specific roles and
+                permissions.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -672,19 +734,27 @@ export function AdminUserManagement() {
                 <h4 className="font-medium mb-3">Basic Information</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Full Name</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Full Name
+                    </label>
                     <Input placeholder="Enter full name" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Email Address</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Email Address
+                    </label>
                     <Input type="email" placeholder="user@medicare.com" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Phone Number</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Phone Number
+                    </label>
                     <Input placeholder="+1 (555) 123-4567" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Department</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Department
+                    </label>
                     <Select defaultValue="">
                       <SelectTrigger>
                         <SelectValue placeholder="Select department" />
@@ -692,7 +762,9 @@ export function AdminUserManagement() {
                       <SelectContent>
                         <SelectItem value="management">Management</SelectItem>
                         <SelectItem value="operations">Operations</SelectItem>
-                        <SelectItem value="customer_service">Customer Service</SelectItem>
+                        <SelectItem value="customer_service">
+                          Customer Service
+                        </SelectItem>
                         <SelectItem value="it">IT</SelectItem>
                         <SelectItem value="pharmacy">Pharmacy</SelectItem>
                       </SelectContent>
@@ -706,7 +778,9 @@ export function AdminUserManagement() {
                 <h4 className="font-medium mb-3">Role & Permissions</h4>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Admin Role</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Admin Role
+                    </label>
                     <Select defaultValue="">
                       <SelectTrigger>
                         <SelectValue placeholder="Select role" />
@@ -721,7 +795,9 @@ export function AdminUserManagement() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-3 block">Permissions</label>
+                    <label className="text-sm font-medium mb-3 block">
+                      Permissions
+                    </label>
                     <div className="grid grid-cols-2 gap-3">
                       {[
                         "Dashboard Access",
@@ -731,11 +807,20 @@ export function AdminUserManagement() {
                         "Product Management",
                         "Reports & Analytics",
                         "Settings Management",
-                        "System Administration"
+                        "System Administration",
                       ].map((permission) => (
-                        <div key={permission} className="flex items-center space-x-2">
-                          <input type="checkbox" id={permission} className="rounded" />
-                          <label htmlFor={permission} className="text-sm">{permission}</label>
+                        <div
+                          key={permission}
+                          className="flex items-center space-x-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id={permission}
+                            className="rounded"
+                          />
+                          <label htmlFor={permission} className="text-sm">
+                            {permission}
+                          </label>
                         </div>
                       ))}
                     </div>
@@ -748,23 +833,38 @@ export function AdminUserManagement() {
                 <h4 className="font-medium mb-3">Security Settings</h4>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Temporary Password</label>
-                    <Input type="password" placeholder="Enter temporary password" />
-                    <p className="text-xs text-muted-foreground mt-1">User will be required to change password on first login</p>
+                    <label className="text-sm font-medium mb-2 block">
+                      Temporary Password
+                    </label>
+                    <Input
+                      type="password"
+                      placeholder="Enter temporary password"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      User will be required to change password on first login
+                    </p>
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <label className="text-sm font-medium">Require Two-Factor Authentication</label>
-                      <p className="text-xs text-muted-foreground">Force 2FA setup on first login</p>
+                      <label className="text-sm font-medium">
+                        Require Two-Factor Authentication
+                      </label>
+                      <p className="text-xs text-muted-foreground">
+                        Force 2FA setup on first login
+                      </p>
                     </div>
                     <Switch />
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <label className="text-sm font-medium">Send Welcome Email</label>
-                      <p className="text-xs text-muted-foreground">Email login credentials to the user</p>
+                      <label className="text-sm font-medium">
+                        Send Welcome Email
+                      </label>
+                      <p className="text-xs text-muted-foreground">
+                        Email login credentials to the user
+                      </p>
                     </div>
                     <Switch defaultChecked />
                   </div>
@@ -775,7 +875,9 @@ export function AdminUserManagement() {
               <div>
                 <h4 className="font-medium mb-3">IP Restrictions (Optional)</h4>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Allowed IP Addresses</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Allowed IP Addresses
+                  </label>
                   <textarea
                     className="w-full p-2 border rounded-lg text-sm"
                     rows={3}

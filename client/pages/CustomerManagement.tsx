@@ -18,14 +18,31 @@ import {
   CheckCircle,
   AlertTriangle,
   Star,
-  X
+  X,
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
@@ -45,7 +62,7 @@ const mockCustomers = [
     lastOrder: "2024-01-15T10:30:00Z",
     totalOrders: 15,
     totalSpent: 892.45,
-    averageOrderValue: 59.50,
+    averageOrderValue: 59.5,
     address: "123 Main St, City, State 12345",
     prescriptions: 3,
     loyaltyPoints: 450,
@@ -56,11 +73,11 @@ const mockCustomers = [
     emergencyContact: {
       name: "Jane Doe",
       phone: "+1 (555) 123-4568",
-      relationship: "Spouse"
-    }
+      relationship: "Spouse",
+    },
   },
   {
-    id: "CUST-002", 
+    id: "CUST-002",
     name: "Sarah Smith",
     email: "sarah.smith@email.com",
     phone: "+1 (555) 987-6543",
@@ -70,7 +87,7 @@ const mockCustomers = [
     lastOrder: "2024-01-14T16:45:00Z",
     totalOrders: 8,
     totalSpent: 324.78,
-    averageOrderValue: 40.60,
+    averageOrderValue: 40.6,
     address: "456 Oak Ave, City, State 12345",
     prescriptions: 1,
     loyaltyPoints: 180,
@@ -81,12 +98,12 @@ const mockCustomers = [
     emergencyContact: {
       name: "Michael Smith",
       phone: "+1 (555) 987-6544",
-      relationship: "Brother"
-    }
+      relationship: "Brother",
+    },
   },
   {
     id: "CUST-003",
-    name: "Mike Johnson", 
+    name: "Mike Johnson",
     email: "mike.johnson@email.com",
     phone: "+1 (555) 456-7890",
     avatar: null,
@@ -94,7 +111,7 @@ const mockCustomers = [
     registrationDate: "2023-12-20T11:15:00Z",
     lastOrder: "2024-01-10T09:20:00Z",
     totalOrders: 23,
-    totalSpent: 1456.90,
+    totalSpent: 1456.9,
     averageOrderValue: 63.34,
     address: "789 Pine St, City, State 12345",
     prescriptions: 5,
@@ -106,13 +123,13 @@ const mockCustomers = [
     emergencyContact: {
       name: "Emily Johnson",
       phone: "+1 (555) 456-7891",
-      relationship: "Daughter"
-    }
+      relationship: "Daughter",
+    },
   },
   {
     id: "CUST-004",
     name: "Emma Wilson",
-    email: "emma.wilson@email.com", 
+    email: "emma.wilson@email.com",
     phone: "+1 (555) 321-0987",
     avatar: null,
     status: "inactive",
@@ -131,9 +148,9 @@ const mockCustomers = [
     emergencyContact: {
       name: "Robert Wilson",
       phone: "+1 (555) 321-0988",
-      relationship: "Husband"
-    }
-  }
+      relationship: "Husband",
+    },
+  },
 ];
 
 const getStatusBadge = (status: string) => {
@@ -150,10 +167,10 @@ const getStatusBadge = (status: string) => {
   };
 
   const Icon = icons[status as keyof typeof icons];
-  
+
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("font-medium", styles[status as keyof typeof styles])}
     >
       <Icon className="w-3 h-3 mr-1" />
@@ -165,13 +182,13 @@ const getStatusBadge = (status: string) => {
 const getRiskBadge = (risk: string) => {
   const styles = {
     low: "bg-green-100 text-green-800 border-green-200",
-    medium: "bg-yellow-100 text-yellow-800 border-yellow-200", 
+    medium: "bg-yellow-100 text-yellow-800 border-yellow-200",
     high: "bg-red-100 text-red-800 border-red-200",
   };
 
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn("text-xs", styles[risk as keyof typeof styles])}
     >
       {risk.toUpperCase()} RISK
@@ -187,11 +204,13 @@ export function CustomerManagement() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const filteredCustomers = mockCustomers.filter((customer) => {
-    const matchesSearch = customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         customer.id.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesStatus = statusFilter === "all" || customer.status === statusFilter;
+    const matchesSearch =
+      customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      customer.id.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "all" || customer.status === statusFilter;
     const matchesTab = selectedTab === "all" || customer.status === selectedTab;
 
     return matchesSearch && matchesStatus && matchesTab;
@@ -200,9 +219,9 @@ export function CustomerManagement() {
   const getStatusCounts = () => {
     return {
       all: mockCustomers.length,
-      active: mockCustomers.filter(c => c.status === 'active').length,
-      inactive: mockCustomers.filter(c => c.status === 'inactive').length,
-      suspended: mockCustomers.filter(c => c.status === 'suspended').length,
+      active: mockCustomers.filter((c) => c.status === "active").length,
+      inactive: mockCustomers.filter((c) => c.status === "inactive").length,
+      suspended: mockCustomers.filter((c) => c.status === "suspended").length,
     };
   };
 
@@ -213,9 +232,12 @@ export function CustomerManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Customer Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Customer Management
+          </h1>
           <p className="text-muted-foreground">
-            Manage customer profiles, view order history, and handle account management.
+            Manage customer profiles, view order history, and handle account
+            management.
           </p>
         </div>
         <div className="flex items-center space-x-2">
@@ -234,7 +256,9 @@ export function CustomerManagement() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Customers</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Customers
+            </CardTitle>
             <UserPlus className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -246,7 +270,9 @@ export function CustomerManagement() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Customers</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Active Customers
+            </CardTitle>
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -263,7 +289,10 @@ export function CustomerManagement() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              ${mockCustomers.reduce((sum, c) => sum + c.totalSpent, 0).toLocaleString()}
+              $
+              {mockCustomers
+                .reduce((sum, c) => sum + c.totalSpent, 0)
+                .toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-success">+15%</span> from last month
@@ -272,12 +301,18 @@ export function CustomerManagement() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg. Order Value</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Avg. Order Value
+            </CardTitle>
             <ShoppingBag className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              ${(mockCustomers.reduce((sum, c) => sum + c.averageOrderValue, 0) / mockCustomers.length).toFixed(2)}
+              $
+              {(
+                mockCustomers.reduce((sum, c) => sum + c.averageOrderValue, 0) /
+                mockCustomers.length
+              ).toFixed(2)}
             </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-success">+5%</span> from last month
@@ -349,14 +384,17 @@ export function CustomerManagement() {
             <CardHeader>
               <CardTitle>Customers ({filteredCustomers.length})</CardTitle>
               <CardDescription>
-                {selectedTab === "all" ? "All customers" : `${selectedTab} customers`} in the system
+                {selectedTab === "all"
+                  ? "All customers"
+                  : `${selectedTab} customers`}{" "}
+                in the system
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {filteredCustomers.map((customer) => (
-                  <div 
-                    key={customer.id} 
+                  <div
+                    key={customer.id}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
                     onClick={() => setSelectedCustomer(customer)}
                   >
@@ -364,7 +402,10 @@ export function CustomerManagement() {
                       <Avatar className="h-12 w-12">
                         <AvatarImage src={customer.avatar} />
                         <AvatarFallback className="bg-primary/10 text-primary font-medium">
-                          {customer.name.split(' ').map(n => n[0]).join('')}
+                          {customer.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
@@ -373,7 +414,10 @@ export function CustomerManagement() {
                           {getStatusBadge(customer.status)}
                           {getRiskBadge(customer.riskScore)}
                           {customer.prescriptions > 0 && (
-                            <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-blue-50 text-blue-700 border-blue-200"
+                            >
                               {customer.prescriptions} Rx
                             </Badge>
                           )}
@@ -390,14 +434,19 @@ export function CustomerManagement() {
                         </div>
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
                           <span>{customer.totalOrders} orders</span>
-                          <span>Last order: {new Date(customer.lastOrder).toLocaleDateString()}</span>
+                          <span>
+                            Last order:{" "}
+                            {new Date(customer.lastOrder).toLocaleDateString()}
+                          </span>
                           <span>{customer.loyaltyPoints} points</span>
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="font-medium">${customer.totalSpent.toLocaleString()}</p>
+                        <p className="font-medium">
+                          ${customer.totalSpent.toLocaleString()}
+                        </p>
                         <p className="text-xs text-muted-foreground">
                           ${customer.averageOrderValue.toFixed(2)} avg
                         </p>
@@ -426,11 +475,13 @@ export function CustomerManagement() {
                     </div>
                   </div>
                 ))}
-                
+
                 {filteredCustomers.length === 0 && (
                   <div className="text-center py-8">
                     <UserPlus className="mx-auto h-12 w-12 text-muted-foreground" />
-                    <h3 className="mt-2 text-sm font-medium">No customers found</h3>
+                    <h3 className="mt-2 text-sm font-medium">
+                      No customers found
+                    </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Try adjusting your search or filter criteria.
                     </p>
@@ -452,19 +503,24 @@ export function CustomerManagement() {
                   <Avatar className="h-16 w-16">
                     <AvatarImage src={selectedCustomer.avatar} />
                     <AvatarFallback className="bg-primary/10 text-primary font-medium text-xl">
-                      {selectedCustomer.name.split(' ').map((n: string) => n[0]).join('')}
+                      {selectedCustomer.name
+                        .split(" ")
+                        .map((n: string) => n[0])
+                        .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-2xl">{selectedCustomer.name}</CardTitle>
+                    <CardTitle className="text-2xl">
+                      {selectedCustomer.name}
+                    </CardTitle>
                     <div className="flex items-center gap-2 mt-1">
                       {getStatusBadge(selectedCustomer.status)}
                       {getRiskBadge(selectedCustomer.riskScore)}
                     </div>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   onClick={() => setSelectedCustomer(null)}
                 >
@@ -499,19 +555,27 @@ export function CustomerManagement() {
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
                       <p className="text-muted-foreground">Total Orders</p>
-                      <p className="font-medium text-lg">{selectedCustomer.totalOrders}</p>
+                      <p className="font-medium text-lg">
+                        {selectedCustomer.totalOrders}
+                      </p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Total Spent</p>
-                      <p className="font-medium text-lg">${selectedCustomer.totalSpent.toLocaleString()}</p>
+                      <p className="font-medium text-lg">
+                        ${selectedCustomer.totalSpent.toLocaleString()}
+                      </p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Avg Order Value</p>
-                      <p className="font-medium text-lg">${selectedCustomer.averageOrderValue.toFixed(2)}</p>
+                      <p className="font-medium text-lg">
+                        ${selectedCustomer.averageOrderValue.toFixed(2)}
+                      </p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Loyalty Points</p>
-                      <p className="font-medium text-lg">{selectedCustomer.loyaltyPoints}</p>
+                      <p className="font-medium text-lg">
+                        {selectedCustomer.loyaltyPoints}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -522,22 +586,36 @@ export function CustomerManagement() {
                 <h4 className="font-medium mb-3">Medical Information</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-2">Medical Conditions</p>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Medical Conditions
+                    </p>
                     <div className="flex flex-wrap gap-1">
                       {selectedCustomer.medicalConditions.length > 0 ? (
-                        selectedCustomer.medicalConditions.map((condition: string) => (
-                          <Badge key={condition} variant="outline" className="text-xs">
-                            {condition}
-                          </Badge>
-                        ))
+                        selectedCustomer.medicalConditions.map(
+                          (condition: string) => (
+                            <Badge
+                              key={condition}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {condition}
+                            </Badge>
+                          ),
+                        )
                       ) : (
-                        <span className="text-sm text-muted-foreground">None reported</span>
+                        <span className="text-sm text-muted-foreground">
+                          None reported
+                        </span>
                       )}
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-2">Insurance Provider</p>
-                    <p className="text-sm font-medium">{selectedCustomer.insuranceProvider}</p>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Insurance Provider
+                    </p>
+                    <p className="text-sm font-medium">
+                      {selectedCustomer.insuranceProvider}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -546,9 +624,18 @@ export function CustomerManagement() {
               <div>
                 <h4 className="font-medium mb-3">Emergency Contact</h4>
                 <div className="text-sm">
-                  <p><strong>Name:</strong> {selectedCustomer.emergencyContact.name}</p>
-                  <p><strong>Phone:</strong> {selectedCustomer.emergencyContact.phone}</p>
-                  <p><strong>Relationship:</strong> {selectedCustomer.emergencyContact.relationship}</p>
+                  <p>
+                    <strong>Name:</strong>{" "}
+                    {selectedCustomer.emergencyContact.name}
+                  </p>
+                  <p>
+                    <strong>Phone:</strong>{" "}
+                    {selectedCustomer.emergencyContact.phone}
+                  </p>
+                  <p>
+                    <strong>Relationship:</strong>{" "}
+                    {selectedCustomer.emergencyContact.relationship}
+                  </p>
                 </div>
               </div>
 
@@ -556,7 +643,9 @@ export function CustomerManagement() {
               {selectedCustomer.notes && (
                 <div>
                   <h4 className="font-medium mb-3">Notes</h4>
-                  <p className="text-sm text-muted-foreground">{selectedCustomer.notes}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {selectedCustomer.notes}
+                  </p>
                 </div>
               )}
 
@@ -604,19 +693,27 @@ export function CustomerManagement() {
                 <h4 className="font-medium mb-3">Personal Information</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Full Name</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Full Name
+                    </label>
                     <Input placeholder="Enter full name" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Email Address</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Email Address
+                    </label>
                     <Input type="email" placeholder="customer@email.com" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Phone Number</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Phone Number
+                    </label>
                     <Input placeholder="+1 (555) 123-4567" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Date of Birth</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Date of Birth
+                    </label>
                     <Input type="date" />
                   </div>
                 </div>
@@ -627,20 +724,28 @@ export function CustomerManagement() {
                 <h4 className="font-medium mb-3">Address Information</h4>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Street Address</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Street Address
+                    </label>
                     <Input placeholder="123 Main Street" />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="text-sm font-medium mb-2 block">City</label>
+                      <label className="text-sm font-medium mb-2 block">
+                        City
+                      </label>
                       <Input placeholder="City" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium mb-2 block">State</label>
+                      <label className="text-sm font-medium mb-2 block">
+                        State
+                      </label>
                       <Input placeholder="State" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium mb-2 block">ZIP Code</label>
+                      <label className="text-sm font-medium mb-2 block">
+                        ZIP Code
+                      </label>
                       <Input placeholder="12345" />
                     </div>
                   </div>
@@ -652,7 +757,9 @@ export function CustomerManagement() {
                 <h4 className="font-medium mb-3">Medical Information</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Insurance Provider</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Insurance Provider
+                    </label>
                     <Select defaultValue="">
                       <SelectTrigger>
                         <SelectValue placeholder="Select insurance provider" />
@@ -661,19 +768,25 @@ export function CustomerManagement() {
                         <SelectItem value="blue_cross">Blue Cross</SelectItem>
                         <SelectItem value="aetna">Aetna</SelectItem>
                         <SelectItem value="medicare">Medicare</SelectItem>
-                        <SelectItem value="united_healthcare">United Healthcare</SelectItem>
+                        <SelectItem value="united_healthcare">
+                          United Healthcare
+                        </SelectItem>
                         <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Insurance ID</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Insurance ID
+                    </label>
                     <Input placeholder="Insurance ID number" />
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <label className="text-sm font-medium mb-2 block">Medical Conditions</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Medical Conditions
+                  </label>
                   <textarea
                     className="w-full p-2 border rounded-lg text-sm"
                     rows={3}
@@ -682,7 +795,9 @@ export function CustomerManagement() {
                 </div>
 
                 <div className="mt-4">
-                  <label className="text-sm font-medium mb-2 block">Allergies</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Allergies
+                  </label>
                   <textarea
                     className="w-full p-2 border rounded-lg text-sm"
                     rows={2}
@@ -696,15 +811,21 @@ export function CustomerManagement() {
                 <h4 className="font-medium mb-3">Emergency Contact</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Contact Name</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Contact Name
+                    </label>
                     <Input placeholder="Emergency contact name" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Contact Phone</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Contact Phone
+                    </label>
                     <Input placeholder="+1 (555) 987-6543" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Relationship</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Relationship
+                    </label>
                     <Select defaultValue="">
                       <SelectTrigger>
                         <SelectValue placeholder="Select relationship" />
@@ -727,31 +848,51 @@ export function CustomerManagement() {
                 <h4 className="font-medium mb-3">Account Settings</h4>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Temporary Password</label>
-                    <Input type="password" placeholder="Enter temporary password" />
-                    <p className="text-xs text-muted-foreground mt-1">Customer will be required to change password on first login</p>
+                    <label className="text-sm font-medium mb-2 block">
+                      Temporary Password
+                    </label>
+                    <Input
+                      type="password"
+                      placeholder="Enter temporary password"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Customer will be required to change password on first
+                      login
+                    </p>
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <label className="text-sm font-medium">Send Welcome Email</label>
-                      <p className="text-xs text-muted-foreground">Email login credentials to the customer</p>
+                      <label className="text-sm font-medium">
+                        Send Welcome Email
+                      </label>
+                      <p className="text-xs text-muted-foreground">
+                        Email login credentials to the customer
+                      </p>
                     </div>
                     <Switch defaultChecked />
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <label className="text-sm font-medium">Marketing Emails</label>
-                      <p className="text-xs text-muted-foreground">Send promotional emails and newsletters</p>
+                      <label className="text-sm font-medium">
+                        Marketing Emails
+                      </label>
+                      <p className="text-xs text-muted-foreground">
+                        Send promotional emails and newsletters
+                      </p>
                     </div>
                     <Switch />
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <label className="text-sm font-medium">SMS Notifications</label>
-                      <p className="text-xs text-muted-foreground">Send order updates via SMS</p>
+                      <label className="text-sm font-medium">
+                        SMS Notifications
+                      </label>
+                      <p className="text-xs text-muted-foreground">
+                        Send order updates via SMS
+                      </p>
                     </div>
                     <Switch defaultChecked />
                   </div>

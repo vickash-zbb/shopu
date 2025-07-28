@@ -221,7 +221,7 @@ export function CustomerManagement() {
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button size="sm">
+          <Button size="sm" onClick={() => setShowAddModal(true)}>
             <UserPlus className="w-4 h-4 mr-2" />
             Add Customer
           </Button>

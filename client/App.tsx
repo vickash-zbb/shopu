@@ -7,6 +7,7 @@ import { DeliveryStaffManagement } from "./pages/DeliveryStaffManagement";
 import { AdminUserManagement } from "./pages/AdminUserManagement";
 import { LogisticsManagement } from "./pages/LogisticsManagement";
 import { ProductManagement } from "./pages/ProductManagement";
+import { NotificationsManagement } from "./pages/NotificationsManagement";
 import { PlaceholderPage } from "./pages/PlaceholderPage";
 import { NotFound } from "./pages/NotFound";
 

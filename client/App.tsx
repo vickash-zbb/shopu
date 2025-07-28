@@ -23,15 +23,7 @@ function App() {
           <Route path="/users/admin" element={<AdminUserManagement />} />
           <Route path="/logistics" element={<LogisticsManagement />} />
           <Route path="/products" element={<ProductManagement />} />
-          <Route 
-            path="/notifications" 
-            element={
-              <PlaceholderPage 
-                title="Notifications Management" 
-                description="Configure and send SMS, email, and push notifications to users and staff."
-              />
-            } 
-          />
+          <Route path="/notifications" element={<NotificationsManagement />} />
           <Route 
             path="/content" 
             element={

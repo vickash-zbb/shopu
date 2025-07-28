@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Dashboard } from "./pages/Dashboard";
 import { Orders } from "./pages/Orders";
+import { CustomerManagement } from "./pages/CustomerManagement";
+import { DeliveryStaffManagement } from "./pages/DeliveryStaffManagement";
+import { AdminUserManagement } from "./pages/AdminUserManagement";
 import { PlaceholderPage } from "./pages/PlaceholderPage";
 import { NotFound } from "./pages/NotFound";
 

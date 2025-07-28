@@ -8,6 +8,8 @@ import { AdminUserManagement } from "./pages/AdminUserManagement";
 import { LogisticsManagement } from "./pages/LogisticsManagement";
 import { ProductManagement } from "./pages/ProductManagement";
 import { NotificationsManagement } from "./pages/NotificationsManagement";
+import { ContentManagement } from "./pages/ContentManagement";
+import { SettingsConfiguration } from "./pages/SettingsConfiguration";
 import { PlaceholderPage } from "./pages/PlaceholderPage";
 import { NotFound } from "./pages/NotFound";
 

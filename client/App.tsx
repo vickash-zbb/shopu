@@ -26,24 +26,8 @@ function App() {
           <Route path="/logistics" element={<LogisticsManagement />} />
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/notifications" element={<NotificationsManagement />} />
-          <Route 
-            path="/content" 
-            element={
-              <PlaceholderPage 
-                title="Content Management" 
-                description="Manage website content, pages, and promotional materials."
-              />
-            } 
-          />
-          <Route 
-            path="/settings" 
-            element={
-              <PlaceholderPage 
-                title="Settings & Configuration" 
-                description="Configure platform settings, payment gateways, and API integrations."
-              />
-            } 
-          />
+          <Route path="/content" element={<ContentManagement />} />
+          <Route path="/settings" element={<SettingsConfiguration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

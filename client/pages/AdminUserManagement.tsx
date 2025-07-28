@@ -199,6 +199,7 @@ export function AdminUserManagement() {
   const [searchQuery, setSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [selectedAdmin, setSelectedAdmin] = useState<any>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const filteredAdmins = mockAdminUsers.filter((admin) => {
     const matchesSearch = admin.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

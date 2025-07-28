@@ -21,15 +21,7 @@ function App() {
           <Route path="/users/delivery" element={<DeliveryStaffManagement />} />
           <Route path="/users/admin" element={<AdminUserManagement />} />
           <Route path="/logistics" element={<LogisticsManagement />} />
-          <Route 
-            path="/products" 
-            element={
-              <PlaceholderPage 
-                title="Product Management" 
-                description="Manage inventory, add new products, and update pricing information."
-              />
-            } 
-          />
+          <Route path="/products" element={<ProductManagement />} />
           <Route 
             path="/notifications" 
             element={

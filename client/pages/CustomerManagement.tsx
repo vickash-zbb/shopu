@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   Download,
   Eye,
   Edit,
@@ -17,7 +17,8 @@ import {
   Ban,
   CheckCircle,
   AlertTriangle,
-  Star
+  Star,
+  X
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
